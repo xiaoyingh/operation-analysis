@@ -1,0 +1,84 @@
+// colors 集合所有颜色常量
+
+/* 主题色----------------------------------- */
+
+    // Mode Color  模式颜色
+    $pureWhite: #ffffff; //纯净白
+    $darkNightGrey: #242733; //暗夜灰
+
+    // Auxiliary color  辅助色
+    $vitalityRed: #E21837; //活力红
+    $youthYellow: #FCAA02; //青春黄
+    $eliteBlue: #3471FF; //精锐蓝
+    $simplePurple: #6c67e8; //简约紫
+    $ecologicalGreen: #28cdb4; //生态绿
+    $auxiliarColor1: #fd794a; //辅助色1 
+    $auxiliarColor2: #1ab2f0; //辅助色2
+    $auxiliarColor3: #24dcff; //辅助色3
+
+    // Special state 特殊状态
+    $failureColor: #FD5045; //失败色/警告
+    $successColor: #20be74; //成功色
+    $ProcessingColor: #fd794a; //处理中
+
+    // Special colors 特殊颜色
+    $specialColors: #A0A2B2; //侧边栏icon及文字颜色
+
+    // Ranking status 排行状态
+    $rankingHigh: #e21837;  //高
+    $rankingMiddle: #fcaa02;  //中
+    $rankingLow: #3471ff;  //低
+
+    // Function button color 功能按钮色
+    $functionButtonColor: #3471FF;  //功能按钮色
+
+/* 常规模式-字体色----------------------------------- */
+
+    // Text color 文本颜色
+    $lightText: #A0A2B2; //用于侧边栏icon及文字颜色
+    $lightText1: #2F3033; //用于常规状态文字颜色（一级标题及列表正文等）
+    $lightText2: #5F6166; //用于二级文字信息（卡片字段等）
+    $lightText3: #8f9299; //用于次要文字信息（标头字段等）
+    $lightText4: #B7BCC5; //用于提示性文字信息（图例信息等）
+    $lightText5: #DDDDDD; //用于禁用文字信息
+
+    // Border color 边框颜色
+    $lightBorder: #A0A2B2; //用于按钮边框颜色
+    $lightBorder1: #EAEAED; //用于一级标题线框
+    $lightBorder2: #E8ECF0; //用于图表内线条颜色
+
+    // Background color 背景色
+    $lightSidebar: #ffffff; //用于侧边栏背景颜色
+    $lightSidebarSelected: #f2f2f1; //用于侧边栏选中状态底色
+    $lightBackground: #e8ecf0; //用于背景底色
+    $lightPlate: #ffffff; //用于常规版块底色
+    $lightTableHead: #EAEAED; //用于表格头部底色
+    $lightTableContrast: #EAEAED; //用于表格项目衬色
+    $lightTableSelected: #EAF2FF; //用于表格项目选中色
+
+/* 夜间模式-字体色----------------------------------- */
+
+    // Text color 文本颜色
+    $darkText: #A0A2B2; //用于侧边栏icon及文字颜色
+    $darkText1: #5f6166; //用于禁止不可操作或提示性文字薪资
+    $darkText2: #8f9299; //用于常规显示及输入文字颜色
+    $darkText3: #ffffff; //用于常规显示及输入文字颜色
+  
+    // Border color 边框颜色
+    $darkBorder: #A0A2B2; //用于按钮边框颜色
+    $darkBorder1: #414450; //用于一级标题线框
+    $darkBorder2: #32353e; //用于图表内线条颜色
+
+    // Background color 背景色
+    $darkSidebar: #242733; //用于侧边栏背景颜色
+    $darkSidebarSelected: #393c48; //用于侧边栏选中状态底色
+    $darkBackground: #2e313d; //用于背景底色
+    $darkPlate: #292c36; //用于常规版块底色
+    $darkTableHead: #2e313d; //用于表格头部及项目衬色
+    $darkTableContrast: #393c48; //用于表格项目选中状态衬色
+
+  /* 通用-字体色----------------------------------- */
+    $navbarColor: #fff; //navbar字体颜色
+
+    $scrollbarPiece: #d3dce6; //滚动条轨迹
+    $scrollbarThumb:#99a9bf; //滚动条方块

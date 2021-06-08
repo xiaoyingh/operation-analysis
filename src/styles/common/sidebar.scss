@@ -1,0 +1,343 @@
+$sideBarOpenWidth: 200px;
+$sideBarCloseWidth: 64px;
+$fixedOpenWidth: calc(100% - 200px);
+$fixedCloseWidth: calc(100% - 64px);
+$navBarHeight: 65px;
+
+  // 公共
+  .fixed-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 9;
+    @include animateSiderBar(width)
+  }
+  // 收缩功能
+  .hamburger {
+    width: 100%;
+    height: 40px;
+    span {
+      width: 100%;
+      display: inline-block;
+      cursor: pointer;
+      font-size:$font14px;
+      color: #a0a2b2;
+    }
+    .is-active {
+      padding-right: 20px;
+      text-align: right;
+    }
+    .in-active {
+      text-align: center;
+    }
+  }
+  // hover
+  .el-menu--popup { 
+    min-width: 132px!important;
+    background-color:var(--navBarColor)!important;
+    .el-submenu .el-menu-item {
+      min-width: 130px!important;
+    }
+    .nest-menu, .el-menu-item {
+      min-width: 130px!important;
+      padding: 0!important;
+      color: #fff!important;
+      height: 44px;
+      line-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .submenu-title {
+        display: inline-block;
+        height: 36px;
+        line-height: 36px;
+        width: 120px;
+        border-radius: 4px;
+        text-align: center;
+      }
+      .is-active {
+        .submenu-title {
+          background-color: #e8ecf0 !important;
+          color: var(--navBarColor)!important;
+        }  
+      }
+      &:hover {
+        background-color: transparent;
+        color: var(--navBarColor)!important;
+        .submenu-title {
+          background-color:#e8ecf0;
+        }  
+      }
+    }
+  }
+  // 侧边导航
+  .sidebar-container {
+    @include animateSiderBar(width);
+    @include background_color("siderbar-bg");   
+    height: 100%;
+    position: fixed;
+    font-size: 0px;
+    bottom: 0;
+    left: 0;
+    z-index: 1001;
+    overflow: hidden;
+    // logo css
+    .sidebar-logo-container {
+      position: relative;
+      width: 100%;
+      height: 65px;
+      line-height: 60px;
+      text-align: center;
+      overflow: hidden;
+    
+      & .sidebar-logo-link {
+        height: 100%;
+        width: 100%;
+    
+        & .sidebar-logo {
+          width: 36px;
+          height: 36px;
+          vertical-align: middle;
+          margin-right: 20px;
+        }
+    
+        & .sidebar-title {
+          width: 100px;
+          vertical-align: middle;
+        }
+      }
+    
+      &.collapse {
+        .sidebar-logo {
+          margin-right: 0px;
+        }
+      }
+    }
+    //menu-item css
+    .menu_sider {
+      @include background_color("siderbar-bg");
+      // 一级
+      .el-menu-item  {
+        height: 60px;
+        line-height: 60px;
+        padding-left: 20px;    
+        font-size: $font16px;
+        @include color("siderbar-no-active");
+        // menu hover
+        &:hover, &:focus {
+          // @include background-color('siderbar-hover-bg');
+          background-color: transparent;
+          color: var(--navBarColor);
+          .iconfont {
+            color: var(--navBarColor);
+          }
+        }
+      }
+      .is-active {
+        color: var(--navBarColor)!important;
+        @include background-color("siderbar-is-active-bg");
+        .left-block {
+          display: inline-block;
+          width: 6px;
+          height: 100%;
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          background-color: var(--navBarColor);
+        }
+      }
+      // 二级
+      .el-submenu {
+        background-color: transparent!important;
+        .el-submenu__title {
+          font-size: $font16px;   
+          &:hover {
+            background-color: transparent;
+            color: var(--navBarColor);
+            .iconfont {
+              color: var(--navBarColor);
+            }
+          }  
+        }
+        .is-active,.el-menu {
+          background-color: transparent;
+        }
+        .nest-menu {
+          .left-block {
+            display: none;
+          }
+        } 
+      }
+      .el-submenu {
+        .nest-menu {
+          height: 44px;
+          .submenu-title {
+            display: inline-block;
+            height: 36px;
+            line-height: 36px;
+            width: 120px;
+            border-radius: 4px;
+            text-align: center;
+          }
+        }
+        .el-menu-item {
+          height: 44px;
+          line-height: 44px;
+        }
+      }
+      .el-submenu.is-active {
+        .el-submenu__title {
+          @include background-color("siderbar-is-active-bg");
+          font-size: $font16px;     
+        }
+        .iconfont {
+          color: var(--navBarColor);
+        }   
+        .nest-menu {
+          height: 44px;
+          .submenu-title {
+            display: inline-block;
+            height: 36px;
+            line-height: 36px;
+            width: 120px;
+            border-radius: 4px;
+            text-align: center;
+          }
+        }
+        .el-menu-item.is-active{
+          .submenu-title {
+            background-color: var(--navBarColor);
+            @include color('siderbar-submenu-color');
+          }
+        }
+      }
+    }
+    // menu hover
+    .submenu-title-noDropdown,
+    .el-submenu__title {
+      @include color('siderbar-no-active');
+    }
+
+    .is-active>.el-submenu__title {
+      color: var(--navBarColor) !important;
+    }
+
+    // reset element-ui css
+    .horizontal-collapse-transition {
+      transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
+    }
+
+    .scrollbar-wrapper {
+      overflow-x: hidden !important;
+    }
+
+    .el-scrollbar__bar.is-vertical {
+      right: 0px;
+    }
+    
+    .el-scrollbar {
+      height: calc(100% - 100px);
+    }
+
+    a {
+      display: inline-block;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .iconfont {
+      font-size: $font24px;
+      margin-right: 14px;
+    }
+
+    .el-menu {
+      border: none;
+      height: 100%;
+      width: 100% !important;
+    }  
+  }
+  // 展开
+  .openSidebar {
+    .sidebar-container {
+      width: $sideBarOpenWidth !important;
+    }
+    .app-container {
+      @include animateSiderBar(margin-left);
+      margin-left: $sideBarOpenWidth;
+      .fixed-header {
+        width: $fixedOpenWidth;
+      }
+      .main-container {
+        @include animateSiderBar(margin-left);
+        padding-top: $navBarHeight;
+        height: 100%;
+        position: relative;
+      }
+    } 
+  } 
+  // 收起
+  .hideSidebar {
+    .sidebar-container {
+      width: $sideBarCloseWidth !important;
+    }
+    .app-container {
+      margin-left: $sideBarCloseWidth;
+      @include animateSiderBar(margin-left);
+      .fixed-header {
+        width: $fixedCloseWidth!important;
+      }
+      .main-container {
+        padding-top: $navBarHeight;
+      }
+    }
+    // el-tooltip
+    .submenu-title-noDropdown {
+      position: relative;
+
+      .el-tooltip {
+        text-align: left;
+
+        .iconfont {
+          font-size: $font24px;
+
+        }
+      }
+    }
+    // 下拉icon
+    .el-submenu .el-submenu__icon-arrow {
+      display: none;
+    }
+    .el-menu--collapse {
+      .el-submenu {
+        &>.el-submenu__title {
+          &>span {
+            height: 0;
+            width: 0;
+            overflow: hidden;
+            visibility: hidden;
+            display: inline-block;
+          }
+        }
+      }
+    }
+    .el-scrollbar__wrap {
+      overflow-x: hidden;
+    }
+  }
+  .withoutAnimation {
+    .main-container,
+    .sidebar-container {
+      transition: none;
+    }
+  }
+
+
+// when menu collapsed
+.el-menu--vertical {
+  // the scroll bar appears when the subMenu is too long
+  >.el-menu--popup {
+    max-height: 100vh;
+    overflow-y: auto;
+    @include scrollBar;
+  }
+}

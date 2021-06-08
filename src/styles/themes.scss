@@ -1,0 +1,383 @@
+@import './common/colors.scss';
+@import './common/fonts.scss';
+//定义全局主题&颜色的map数组，鉴于V5只有白天和晚上的主题，此处仅定义这两种
+//切记 所有颜色一式两份儿，务必保证key值统一，key值可以自定义，注意避免$%_之类的，
+//与sass自有符号冲突，见文知意即可
+//另外如果基于其他UI框架，如本项目基于element-ui，则只需设置一套dark主题，
+//data-theme为dark时，样式引用dark
+//data-theme为其他值时，自然就采用了elementui的默认样式
+
+$themes: ( 
+    light: (
+        // navBar
+        navbar-font-color: $navbarColor, //navbar字体颜色
+        navbar-avater-border: $navbarColor, //navbar头像边框颜色
+
+        // siderBar
+        siderbar-bg:$lightSidebar, //背景颜色,
+        siderbar-no-active: $lightText, //未选中标题颜色
+        siderbar-is-active-bg: $lightSidebarSelected, //选中标题背景
+        siderbar-hover-bg:$lightSidebarSelected, //鼠标悬浮背景颜色
+        siderbar-title-color: $lightText1, //标题颜色
+        // siderbar-scrollbar
+        siderbar-scrollbar-track-piece: $scrollbarPiece, //滚动条轨迹
+        siderbar-scrollbar-thumb: $scrollbarThumb, //滚动条方块
+        
+        // app-main
+        app-main-bg: $lightBackground,
+
+        // 主题切换
+        theme-drawer-color: #2f3033,
+        theme-drawer-notice: #dcdfe6,
+        theme-drawer-divider: #dcdfe6,
+
+        /* elementUI *******************************************************/
+
+        // el-upload
+        upload-bg: #fff,
+        upload-border: #c0ccda,
+
+        // tooltip
+        tooltip-bg: $functionButtonColor,
+        tooltip-color: #fff,
+
+        // el-input
+        input-bg: #fff,
+        input-border: #dcdfe6,
+        input-color: #606266,
+
+        // el-message-box
+        message-bg: #fff,
+        message-border: #ebeef5,
+        message-header-color: #303133,
+        message-content-color: #606266,
+
+        //el-button 
+        button-default-bg:  #fff,
+        button-default-border: #dcdfe6,
+        button-default-color: #606266,
+        button-default-hover-color: #3d7fff,
+        button-default-hover-border: #dae7ff,
+        button-default-hover: #ebf1ff,
+        button-default-active-color: #fff,
+        button-default-active-border: #3D7FFF,
+        button-default-active: #3D7FFF,
+        button-default-disabled-color: rgba(#c1c1c2, .7),
+        button-default-disabled-border: rgba(#e3e3e8, .7),
+        button-default-disabled-bg: rgba(#ffffff, .7),
+
+        button-primary-bg: $functionButtonColor,
+        button-primary-border: $functionButtonColor,
+        button-primary-color: #fff,
+        button-primary-hover:#5d8dff,
+
+        // el-loading
+        loading-bg: rgba(#fff,.3),
+        loading-color: $functionButtonColor,
+
+        // el-pagination
+        pagination-color:#979aa0,
+        pagination-border:#979aa0,
+        pagination-bg:$lightPlate,
+        pagination-span-color: #fff,
+        pagination-active-color:$functionButtonColor,
+
+        // el-tag
+        tag-1-color:#5A5E66,
+        tag-1-border: transparent,
+        tag-1-bg:transparent,
+        tag-2-color: $functionButtonColor,
+        tag-2-border: transparent,
+        tag-2-bg:#EBF2FF,
+        tag-3-color:#5A5E66,
+        tag-3-border:#d5d6dd,
+        tag-3-bg: $lightPlate,
+        tag-close-color: $functionButtonColor,
+        tag-close-hover-color: $lightPlate,
+
+        // el-tab
+        tab-nav-bg: $lightPlate,
+        tab-item-color: $lightText1,
+
+        // el-drawer
+        drawer-header-bg: #f0f2f5,
+        drawer-header-color: $lightText1,
+        drawer-body-bg: #fff,
+
+        //  el-autocomplete
+        autocomplete-bg:#fff,
+        autocomplete-color: #606266,
+        autocomplete-border:#e4e7ed,
+        autocomplete-hover-bg: #f5f7fa,
+        autocomplete-active: $functionButtonColor,
+
+         // el-dialog
+        dialog-bg: #fff,
+        dialog-border:  #e4e7ed,
+        dialog-header-border: #eaeaed,
+        dialog-header-color: #303133,
+        dialog-content-color: #606266,
+
+        // el-select
+        select-dropdown-bg: #fff,
+        select-dropdown-border: #e4e7ed,
+        select-dropdown-color: #606266,
+        select-dropdown-hover-bg: #f5f7fa,
+        select-dropdown-hover-border:  #606266,
+        select-dropdown-hover-color:#606266,
+        select-dropdown-select: $functionButtonColor,
+
+        // el-dropdown
+        menu-dropdown-bg: #fff,
+        menu-dropdown-border: #e4e7ed,
+        menu-dropdown-color: #606266,
+        menu-dropdown-hover-bg: #f5f7fa,
+        menu-dropdown-select: $functionButtonColor,
+
+        // el-date-range-picker
+        date-range-main-color: $functionButtonColor,
+        date-range-input-bg: #fff,
+        date-range-separator: #303133,
+        date-range-picker-bg: #fff,
+        date-range-picker-color: #606266,
+        date-range-picker-border: #e4e7ed,
+        date-range-picker-header: #606266,
+        date-range-picker-header-icon: #606266,
+        date-range-picker-content-border: #e4e4e4,
+        date-range-picker-next-and-prev-color: #303133,
+        date-picker-range-div: #f2f6fc,
+
+        // el-breadcrumb
+        breadcrumb-inner: #303133,
+        breadcrumb-separator: #c0c4cc,
+        breadcrumb-redirect: #606266,
+        breadcrumb-active:  $functionButtonColor,
+
+        // el-cascader
+        cascader-dropdown-bg: #fff,
+        cascader-dropdown-border: #e4e7ed,
+        cascader-dropdown-hover-bg: #f5f7fa,
+        cascader-dropdown-hover-color: $functionButtonColor,
+        cascader-dropdown-color: #303133,
+
+        // el-popper 三角按钮
+        popper-arrow-border: #e4e7ed,
+        popper-arrow-bg:#fff,
+
+        // el-divider
+        divider-bg: #dcdfe6,
+
+        //el-table
+        table-color:$lightText1,
+        table-th-color:#8F9299,
+        table-striped-bg: #fafafa,
+        table-zebra-bg: #f8f9fb,
+        table-th-bg:#f2f2f2,
+        table-tr-bg:$lightPlate,
+        table-header-bg: #f2f2f2,
+        table-tr-bg-striped:$lightPlate,
+        table-tr-bg-hover:#f1f6ff,
+
+        // el-form
+        form-label-color:#333330,
+
+        // el-tab-pane
+        radio-pane-inner-color: #5F6166,
+        radio-pane-inner-bg: $lightPlate,
+        radio-pane-inner-hover:  $functionButtonColor,
+        radio-pane-border: #dcdfe6,
+        radio-pane-active-border:  $functionButtonColor,
+        radio-pane-active-color: $lightText1,
+    ),
+
+    dark: (
+        // navBar
+        navbar-font-color: $navbarColor, //navbar字体颜色
+        navbar-avater-border: $navbarColor, //navbar头像边框颜色
+
+        // siderBar
+        siderbar-bg: $darkSidebar, //背景颜色,
+        siderbar-no-active: $darkText, //未选中标题颜色
+        siderbar-is-active-bg: $darkSidebarSelected, //选中标题背景
+        siderbar-hover-bg:$darkSidebarSelected, //鼠标悬浮背景颜色
+        siderbar-title-color: #ffffff, //标题颜色
+        // siderbar-scrollbar
+        siderbar-scrollbar-track-piece: $scrollbarPiece, //滚动条轨迹
+        siderbar-scrollbar-thumb: $scrollbarThumb, //滚动条方块
+        
+        // app-main
+        app-main-bg: $darkBackground,
+
+        // 主题切换
+        theme-drawer-color: #2f3033,
+        theme-drawer-notice: #dcdfe6,
+        theme-drawer-divider: #dcdfe6,
+
+        /* elementUI *******************************************************/
+        
+        // el-upload
+        upload-bg: #2f313c,
+        upload-border: #2e313d,
+
+        // tooltip
+        tooltip-bg: $functionButtonColor,
+        tooltip-color: #fff,
+
+        // el-input
+        input-bg: #2f313c,
+        input-border: #2f313c,
+        input-color: $darkText2,
+
+        // el-message-box
+        message-bg: #292c36,
+        message-border: #2e313d,
+        message-header-color: $darkText2,
+        message-content-color: $darkText2,
+
+         //el-button 
+        button-default-bg: #2f313c,
+        button-default-border:  $darkBorder,
+        button-default-color: $darkText2,
+        button-default-hover-color: $darkText2,
+        button-default-hover-border: #393c48,
+        button-default-hover: #393c48,
+        button-default-active-color: $darkText2,
+        button-default-active-border: #393c48,
+        button-default-active: #393c48,
+        button-default-disabled-color: rgba(#393c48, .7),
+        button-default-disabled-border: rgba(#393c48, .7),
+        button-default-disabled-bg: rgba(#292c36, .7),
+
+         button-primary-bg:  $functionButtonColor,
+         button-primary-border:  $functionButtonColor,
+         button-primary-color: $darkText3,
+         button-primary-hover: #5d8dff,
+
+        // el-loading
+        loading-bg: rgba(#292c36,.3),
+        loading-color: $functionButtonColor,
+        
+         // el-pagination
+         pagination-color: $darkText2,
+         pagination-border:$darkText2,
+         pagination-bg:#2e313d,
+         pagination-span-color: $darkText3,
+         pagination-active-color:$functionButtonColor,
+ 
+         // el-tag
+         tag-1-color:$darkText2,
+         tag-1-border: transparent,
+         tag-1-bg:transparent,
+         tag-2-color: $functionButtonColor,
+         tag-2-border: #3471ff,
+         tag-2-bg:#2e303d,
+         tag-3-color:$darkText2,
+         tag-3-border:#d5d6dd,
+         tag-3-bg: $darkPlate,
+         tag-close-color:   $functionButtonColor,
+         tag-close-hover-color: $darkPlate,
+ 
+         // el-tab
+         tab-nav-bg: $darkPlate,
+         tab-item-color: $darkText2,
+ 
+         // el-drawer
+         drawer-header-bg: #f0f2f5,
+         drawer-header-color: $lightText1,
+         drawer-body-bg: #fff,
+
+        //  el-autocomplete
+        autocomplete-bg:#292c36,
+        autocomplete-color: $darkText2,
+        autocomplete-border:#2e313d,
+        autocomplete-hover-bg: #393c48,
+        autocomplete-active: $functionButtonColor,
+
+         // el-dialog
+        dialog-bg: #292c36,
+        dialog-border:  #2e313d,
+        dialog-header-border: #414450,
+        dialog-header-color: $darkText2,
+        dialog-content-color: $darkText2,
+
+        // el-select
+        select-dropdown-bg: #2f313c,
+        select-dropdown-border: #2e313d,
+        select-dropdown-color: #8f9299,
+        select-dropdown-hover-bg: #393c48,
+        select-dropdown-hover-border: #2e313d,
+        select-dropdown-hover-color: #8f9299,
+        select-dropdown-select: $functionButtonColor,
+
+        // el-dropdown
+        menu-dropdown-bg: #2f313c,
+        menu-dropdown-border: #2e313d,
+        menu-dropdown-color: #8f9299,
+        menu-dropdown-hover-bg: #393c48,
+        menu-dropdown-select: $functionButtonColor,
+
+        // el-date-range-picker
+        date-range-main-color: $functionButtonColor,
+        date-range-input-bg: #2f313c,
+        date-range-separator: $darkText2,
+        date-range-picker-bg: #292c36,
+        date-range-picker-color: $darkText,
+        date-range-picker-border: #2e313d,
+        date-range-picker-header: $darkText,
+        date-range-picker-header-icon: $darkText,
+        date-range-picker-content-border: #414450,
+        date-range-picker-next-and-prev-color: $darkText1,
+        date-picker-range-div: #393c48,
+
+        // el-breadcrumb
+        breadcrumb-inner: $darkText2,
+        breadcrumb-separator: $darkText1,
+        breadcrumb-redirect: $darkText,
+        breadcrumb-active:  $functionButtonColor,
+
+        // el-cascader
+        cascader-dropdown-bg: #2f313c,
+        cascader-dropdown-border: #2e313d,
+        cascader-dropdown-hover-bg: #393c48,
+        cascader-dropdown-hover-color: $functionButtonColor,
+        cascader-dropdown-color: $darkText2,
+        
+        // el-popper 三角按钮
+        popper-arrow-border: #2e313d,
+        popper-arrow-bg:#2f313c,
+
+        // el-divider
+        divider-bg: #414450,
+ 
+         // el-table 表格
+         table-color:$darkText2,
+         table-th-color:#8F9299,
+         table-striped-bg: #2f313c,
+         table-zebra-bg: #2f313c,
+         table-header-bg: $darkTableHead,
+         table-th-bg:#f2f2f2,
+         table-tr-bg:$darkPlate,
+         table-tr-bg-striped:$darkPlate,
+         table-tr-bg-hover: $darkTableContrast,
+ 
+         // el-form
+         form-label-color: $darkText2,
+ 
+         // el-tab-pane
+         radio-pane-inner-color: $darkText2,
+         radio-pane-inner-bg: $darkPlate,
+         radio-pane-inner-hover:  $functionButtonColor,
+         radio-pane-border: #414450,
+         radio-pane-active-border:  $functionButtonColor,
+         radio-pane-active-color: $lightText1,
+    )
+);
+
+
+@each $theme-name, $theme-map in $themes {
+    @each $theme-name1, $theme-map1 in $theme-map {
+      :export {
+        #{$theme-name}#{$theme-name1}: $theme-map1;
+      }
+    }
+}
