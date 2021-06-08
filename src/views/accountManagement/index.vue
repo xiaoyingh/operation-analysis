@@ -129,8 +129,10 @@
                 <div class="warningTitle"><i class="el-icon-warning" />确定要删除吗？</div>
                 <div class="warningBtnBox">
                   <el-button size="small" @click="outClick">取消</el-button>
-                  <el-button size="small" type="primary"
-                             @click.native.prevent="deleteRow(scope.$index, tableData ,scope.row)"
+                  <el-button
+                    size="small"
+                    type="primary"
+                    @click.native.prevent="deleteRow(scope.$index, tableData ,scope.row)"
                   >确认
                   </el-button>
                 </div>
@@ -166,9 +168,9 @@
         <el-form-item label="账号名称" :label-width="formLabelWidth">
           <el-input v-model="formAdd.mediaName" placeholder="请输入账号名称" autocomplete="off" @input="searchData" />
           <div v-if="mediaNameSelectShow" class="mediaNameSelect">
-            <p v-for="(item,i) in mediaNameList" :id="item.autoId" :key="i" @click="selectmediaClick(item)">{{
-                item.name
-              }}</p>
+            <p v-for="(item,i) in mediaNameList" :id="item.autoId" :key="i" @click="selectmediaClick(item)">
+              {{ item.name }}
+            </p>
           </div>
           <el-alert
             v-if="mediaNameMsg"

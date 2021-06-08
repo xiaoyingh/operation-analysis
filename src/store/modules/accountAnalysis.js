@@ -1,26 +1,42 @@
+import { updateTemplate } from '@/api/commonInterface'
+
 const state = {
-  buttontime: '',
-  timetype: '',
-  sliderShow: true
+  startTime: '', // 起始时间
+  endTime: '', // 结束时间
+  timeType: '',
+  sliderShow: true,
+  buttonTimeEnd: ''
 }
 
 const mutations = {
-  buttontimeaction(state, name) {
-    state.buttontime = name
+  startTimeAction(state, value) {
+    state.startTime = value
   },
-  timetypeaction(state, name) {
-    state.timetype = name
+  endTimeAction(state, value) {
+    state.endTime = value
   },
-  widthCol(state, name) {
-    state.sliderShow = name
+  timeTypeAction(state, value) {
+    state.timeType = value
+  },
+  widthCol(state, value) {
+    state.sliderShow = value
   }
 }
 
-const action = {}
+const actions = {
+  updateLayoutAction({ commit }, params) {
+    updateTemplate(params)
+      .then(res => {
+      })
+      .catch(err => {
+        console.log(err, '模板更新失败')
+      })
+  }
+}
 
 export default {
   namespaced: true,
   state,
-  action,
+  actions,
   mutations
 }

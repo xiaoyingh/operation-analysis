@@ -58,7 +58,7 @@ export default {
         xAxis: {
           type: 'category',
           boundaryGap: false,
-          data: this.chartData.datax,
+          data: this.chartData.dataX,
           axisLine: {
             lineStyle: {
               type: 'solid',
@@ -95,7 +95,7 @@ export default {
         series: [{
           name: this.seriesname,
           type: 'line',
-          data: this.chartData.datay,
+          data: this.chartData.dataY,
           symbolSize: 6,
           symbol: 'circle',
           smooth: true,

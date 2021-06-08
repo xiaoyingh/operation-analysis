@@ -1,6 +1,6 @@
 <template>
   <!-- 普通表格 -->
-  <div>
+  <div class="totalTable">
     <el-table
       :data="chartData.tableData"
       stripe
@@ -12,6 +12,7 @@
         :type="item.type"
         :prop="item.prop"
         :label="item.label"
+        align="center"
         :width="item.width"
         :sortable="item.sortable || false"
       />
@@ -39,6 +40,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.totalTable {
+  background: #ffffff;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow-y: auto;
+}
 /deep/ .el-table--striped .el-table__body tr.el-table__row--striped td {
   background: $tableStripe;
 }

@@ -14,7 +14,7 @@ import router from './router'
 // import '@/icons/iconfont/iconfont.css'
 
 import '@/permission' // permission control
-
+import '@/utils/directive'
 // bus
 import VueBus from 'vue-bus'
 Vue.use(VueBus)

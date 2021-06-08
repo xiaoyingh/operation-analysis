@@ -69,23 +69,23 @@ const actions = {
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       // 不接sso
-      // const data = {
-      //   useId: 555
-      // }
-      // commit('SET_USER', data)
-      // resolve(data)
+      const data = {
+        useId: 555
+      }
+      commit('SET_USER', data)
+      resolve(data)
       // 接sso
-      getInfo().then(response => {
-        const { data } = response
-        if (!data) {
-          reject(response)
-        } else {
-          commit('SET_USER_DATA', data[0])
-          resolve(data)
-        }
-      }).catch(error => {
-        reject(error)
-      })
+      // getInfo().then(response => {
+      //   const { data } = response
+      //   if (!data) {
+      //     reject(response)
+      //   } else {
+      //     commit('SET_USER_DATA', data[0])
+      //     resolve(data)
+      //   }
+      // }).catch(error => {
+      //   reject(error)
+      // })
     })
   },
 

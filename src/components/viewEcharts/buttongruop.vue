@@ -2,7 +2,7 @@
   <div class="buttongroup_time">
     <div class="group-left">
       <div class="totaltable_left_button">
-        <el-radio-group v-model="buttontime" class="Workinghours_top_btn">
+        <el-radio-group v-model="startTime" class="Workinghours_top_btn">
           <el-radio-button label="one">近24小时</el-radio-button>
           <el-radio-button label="two">近7日</el-radio-button>
           <el-radio-button label="there">近30日</el-radio-button>
@@ -13,7 +13,7 @@
       </div>
       <div class="totaltable_right_data">
         <el-date-picker
-          v-model="datetime"
+          v-model="dateTime"
           type="daterange"
           align="right"
           unlink-panels
@@ -21,6 +21,7 @@
           start-placeholder="开始日期"
           end-placeholder="结束日期"
           :picker-options="pickerOptions"
+          @change="daterangechange()"
         />
       </div>
     </div>
@@ -32,6 +33,7 @@
 
 <script>
 import { getBeforeDay, getNowFormatDateHMS, getPreMonthDay, getBeforeWeek, getBeforeMonth, getBeforeYear } from '@/time'
+import moment from 'moment'
 
 export default {
   name: 'Buttongruop',
@@ -64,54 +66,85 @@ export default {
           }
         }]
       },
-      datetime: '',
-      buttontime: 'one',
+      dateTime: '',
+      startTime: 'one',
       time: '',
-      timetype: 3
+      timeType: 3
     }
   },
   watch: {
-    buttontime(val, newval) {
+    startTime(val, newval) {
       switch (val) {
         case 'one':
-          this.time = getBeforeWeek(getNowFormatDateHMS()) // 近24小时
-          this.timetype = 3
+          this.time = getBeforeDay(getNowFormatDateHMS()) // 近24小时
+          this.timeType = 3
           break
         case 'two':
           this.time = getBeforeWeek(getNowFormatDateHMS()) // 前七天
-          this.timetype = 1
+          this.timeType = 1
           break
         case 'there':
           this.time = getBeforeMonth(getNowFormatDateHMS()) // 近30日
-          this.timetype = 1
+          this.timeType = 1
           break
         case 'four':
           this.time = getPreMonthDay(getNowFormatDateHMS(), 3) // 前3个月
-          this.timetype = 2
+          this.timeType = 2
           break
         case 'five':
           this.time = getPreMonthDay(getNowFormatDateHMS(), 6) // 前半年
-          this.timetype = 2
+          this.timeType = 2
           break
         case 'six':
           this.time = getBeforeYear(getNowFormatDateHMS()) // 前一年
-          this.timetype = 2
+          this.timeType = 2
           break
       }
-      this.$store.commit('accountAnalysis/buttontimeaction', this.time)
-      this.$store.commit('accountAnalysis/timetypeaction', this.timetype)
+      this.$store.commit('accountAnalysis/startTimeAction', this.time)
+      this.$store.commit('accountAnalysis/timeTypeAction', this.timeType)
     },
-
-    datetime(val) {
+    dateTime(val) {
       if (val) {
-        // this.$store.commit('accountAnalysis/buttontimeaction', this.time)
+        const startT = moment(val[0]).format('YYYY-MM-DD HH:mm:ss')
+        const endT = moment(val[1]).format('YYYY-MM-DD HH:mm:ss')
+        const days = this.getDaysBetween(startT, endT)
+        // 1:以天为单位 2：以月为单位 3:以小时为单位
+        if (days < 7) {
+          this.timeType = 3
+        } else if (days <= 90) {
+          this.timeType = 1
+        } else {
+          this.timeType = 2
+        }
+        this.$store.commit('accountAnalysis/timeTypeAction', this.timeType)
+        this.$store.commit('accountAnalysis/startTimeAction', startT)
+        this.$store.commit('accountAnalysis/endTimeAction', endT)
       }
     }
-
   },
   created() {
-    this.$store.commit('accountAnalysis/buttontimeaction', getBeforeDay(getNowFormatDateHMS()))
-    this.$store.commit('accountAnalysis/timetypeaction', this.timetype)
+    this.$store.commit('accountAnalysis/startTimeAction', getBeforeDay(getNowFormatDateHMS()))
+    this.$store.commit('accountAnalysis/endTimeAction', moment().format('YYYY-MM-DD HH:mm:ss'))
+    this.$store.commit('accountAnalysis/timeTypeAction', this.timeType)
+  },
+  methods: {
+    /**
+     * 计算两个日期之间的天数
+     * @param dateString1  开始日期 yyyy-MM-dd
+     * @param dateString2  结束日期 yyyy-MM-dd
+     * @returns {number} 如果日期相同 返回一天 开始日期大于结束日期，返回0
+     */
+    getDaysBetween(dateString1, dateString2) {
+      const startDate = Date.parse(dateString1)
+      const endDate = Date.parse(dateString2)
+      if (startDate > endDate) {
+        return 0
+      }
+      if (startDate === endDate) {
+        return 1
+      }
+      return (endDate - startDate) / (24 * 60 * 60 * 1000)
+    }
   }
 
 }

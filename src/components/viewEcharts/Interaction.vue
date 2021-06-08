@@ -16,6 +16,14 @@ export default {
       chart: null
     }
   },
+  watch: {
+    chartData: {
+      handler: function(newVal) {
+        this.initChart()
+      },
+      deep: true
+    }
+  },
   mounted() {
     this.initChart()
   },
@@ -25,19 +33,19 @@ export default {
       const myChartContainer = this.$refs.inter
       const myChartChina = this.$echarts.init(myChartContainer)
       const color = ['#6D93FE', '#FFBB33', '#FF8066', '#52CCA3']
-      const xAxis = this.chartData.datax
+      const xAxis = this.chartData.dataX
       const legend = []
       const seriesData = []
 
       for (let i = 0; i < mapData.length; i++) {
         seriesData.push({
-          name: mapData[i].name,
+          name: mapData[i].stack,
           type: 'bar',
           stack: 'product',
           barWidth: 10,
-          data: mapData[i].value
+          data: mapData[i].data
         })
-        legend.push(mapData[i].name)
+        legend.push(mapData[i].stack)
       }
 
       const optionMap = {

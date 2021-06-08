@@ -1,5 +1,5 @@
 <template>
-  <div :id="chartData.id" ref="reading" style="width: 100%; height: 100%" />
+  <div id="reading" ref="reading" style="width: 100%; height: 100%" />
 </template>
 
 <script>
@@ -16,6 +16,14 @@ export default {
       chart: null
     }
   },
+  watch: {
+    chartData: {
+      handler: function(newVal) {
+        this.initChart()
+      },
+      deep: true
+    }
+  },
   mounted() {
     this.initChart()
   },
@@ -25,7 +33,8 @@ export default {
       // const myChartContainer = document.getElementById('Reading')
       const myChartContainer = that.$refs.reading
       const myChartChina = that.$echarts.init(myChartContainer)
-      const xAxis = that.chartData.datax
+      const xAxis = that.chartData.dataX
+
       const optionMap = {
         tooltip: {
           trigger: 'axis',
@@ -36,7 +45,7 @@ export default {
           },
           textStyle: {
             color: '#000',
-            fontSize: 12,
+            fontSize: 12
           }
         },
         grid: {
@@ -88,7 +97,7 @@ export default {
           }
         },
         series: [{
-          data: that.chartData.arr,
+          data: that.chartData.dataY,
           type: 'bar',
           showBackground: true,
           barWidth: 10,

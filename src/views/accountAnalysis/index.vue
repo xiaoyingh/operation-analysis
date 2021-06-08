@@ -15,7 +15,14 @@
           </el-button>
         </Buttongruop>
       </div>
-      <EChartGrid :layout="layout" />
+      <EChartGrid
+        v-if="layout.length > 0"
+        :drop-conf="dropConf"
+        :layout="layout"
+        :is-vip="0"
+        @change-layout="updateDropTemplate"
+        @click-moredropConf="loadmoreDrag"
+      />
     </div>
     <!--  账号总览   -->
     <el-dialog
@@ -23,10 +30,109 @@
       :visible.sync="dialogVisible"
       width="1096px"
     >
-      <AccountOverview >
+      <AccountOverview @parentFun="getChildData">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary">确 定</el-button>
+        <el-button type="primary" @click="addAccount">确 定</el-button>
       </AccountOverview>
+    </el-dialog>
+
+    <!--  热文top10更多   -->
+    <el-dialog
+      title="热文top10"
+      :visible.sync="dialogVisiblemore"
+      width="1096px"
+    >
+      <div style="height: 100%;" class="hot-article">
+        <el-tabs v-model="activeName" style="height: 100%;" @tab-click="handleClick">
+          <el-tab-pane
+            v-for="(item,index) in tabList"
+            :key="index"
+            :label="item.name"
+            :name="item.id"
+          />
+          <div ref="articlemain" class="article-main" style="height: calc(100% - 44px)">
+            <el-table
+              v-loading="loadingInstance"
+              :data="RMTOPData"
+              style="padding: 0 0 0 16px;"
+              stripe
+            >
+              <el-table-column
+                type="index"
+                label="排名"
+                width="60"
+              >
+                <template slot-scope="scope">
+                  <div v-if="scope.$index==0 && hotsort" class="indexone">
+                    {{ scope.$index + 1 }}
+                  </div>
+                  <div v-else-if="scope.$index==1 && hotsort" class="indextwo">
+                    {{ scope.$index + 1 }}
+                  </div>
+                  <div v-else-if="scope.$index==2 && hotsort" class="indexthere">
+                    {{ scope.$index + 1 }}
+                  </div>
+                  <div v-else class="middle">
+                    {{ scope.$index + 1 }}
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="title"
+                label="发文标题"
+              >
+                <template slot-scope="scope">
+                  <div v-if="scope.$index==0 && hotsort" class="titleone">
+                    {{ getTitleName(scope.row) }}
+                  </div>
+                  <div v-else-if="scope.$index==1 && hotsort" class="titletwo">
+                    {{ getTitleName(scope.row) }}
+                  </div>
+                  <div v-else-if="scope.$index==2 && hotsort" class="titlethere">
+                    {{ getTitleName(scope.row) }}
+                  </div>
+                  <div v-else>
+                    {{ getTitleName(scope.row) }}
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="pubtime"
+                label="发文时间"
+              />
+              <el-table-column
+                prop="trans_num"
+                label="热度值"
+              >
+                <template slot-scope="scope">
+                  <div v-if="scope.$index==0 && hotsort" class="titleone">
+                    {{ scope.row.trans_num }}
+                  </div>
+                  <div v-else-if="scope.$index==1 && hotsort" class="titletwo">
+                    {{ scope.row.trans_num }}
+                  </div>
+                  <div v-else-if="scope.$index==2 && hotsort" class="titlethere">
+                    {{ scope.row.trans_num }}
+                  </div>
+                  <div v-else>
+                    {{ scope.row.trans_num }}
+                  </div>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-tabs>
+      </div>
+      <el-pagination
+        background
+        layout="total, prev, pager, next"
+        :total="hottoal"
+        @current-change="changetotalhot"
+      />
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="hiddendrag()">取 消</el-button>
+        <el-button type="primary" @click="hiddendrag()">确 定</el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -36,277 +142,439 @@ import Numberpapers from '@/components/viewEcharts/numberpapers'
 import Buttongruop from '@/components/viewEcharts/buttongruop'
 import EChartGrid from '@/components/echartGrid'
 import AccountOverview from '@/components/accountNumber/accountOverview'
+import {
+  accountRank, getAnalysisOverviewHotArticle,
+  getDispatchHotWord, getInteractionTrend, getManuscriptTrend, getNewFansTrend,
+  getWechatReadTrend, totalData
+} from '@/api/accountAnalysis'
+import { getAccountAnalysisyi, selectManagementAnalysis, updateAccountAnalysis } from '@/api/comparativeAnalysis'
+import getTimeMixin from '@/utils/getTimeMixin'
+import dropConfig from '@/utils/drop.config.json'
+import layoutMixin from '@/utils/layoutMixin'
 
 export default {
   name: 'AccountAnalysis',
   components: { EChartGrid, Buttongruop, Numberpapers, AccountOverview },
+  mixins: [getTimeMixin, layoutMixin],
   data() {
     return {
-      papers: [{
-        name: '总发文量',
-        number: '580,886'
-      }, {
-        name: '粉丝量',
-        number: '235,110'
-      }, {
-        name: '总阅读/播放量',
-        number: '5,886'
-      }, {
-        name: '总转发/分享量',
-        number: '580,886'
-      }, {
-        name: '总评论量',
-        number: '468'
-      }, {
-        name: '总点赞量',
-        number: '180,881'
-      }],
+      addArr: [],
+      papers: [
+        {
+          name: '总发文量',
+          prop: 'articlesCount',
+          number: ''
+        }, {
+          name: '粉丝量',
+          prop: 'fansCount',
+          number: ''
+        }, {
+          name: '总阅读/播放量',
+          prop: 'readCount',
+          number: ''
+        }, {
+          name: '总转发/分享量',
+          prop: 'rttCount',
+          number: ''
+        }, {
+          name: '总评论量',
+          prop: 'cmtCount',
+          number: ''
+        }, {
+          name: '总点赞量',
+          prop: 'zaikanCount',
+          number: ''
+        }
+      ],
+      tabList: [ // 渠道类型 1:网站 2:电子报纸 3:APP 4:微信 5:微博 6:头条 7:抖音 8:快手
+        { name: '微信榜单', id: '5' },
+        { name: '微博榜单', id: '6' },
+        { name: '抖音', id: '7' },
+        { name: '快手', id: '8' },
+        { name: '网站', id: '1' },
+        { name: '电子报纸榜单', id: '2' }
+      ],
+      activeName: '5',
+      loadingInstance: '',
       show: false,
       dialogVisible: false,
-      layout: [
-        {
-          'x': 0, 'y': 0, 'w': 3, 'h': 3, 'i': '0', chart: 'papers',
-          data: {
-            name: '新增粉丝量',
-            id: 'paperName',
-            datax: ['01/01', '02/01', '03/01', '04/01', '05/01', '06/01', '07/01'],
-            datay: [13, 10, 3, 12, 15, 30, 15]
-          },
-          leftHint: { name: '新增粉丝量' },
-          rightHint: { name: null, count: null, haveLoad: true, more: false }
-        },
-        {
-          'x': 3, 'y': 0, 'w': 3, 'h': 3, 'i': '1', chart: 'Reading',
-          data: {
-            arr: [120, 200, 150, 80, 70, 110, 130, 200, 150, 80, 70, 110],
-            id: 'Read'
-          },
-          leftHint: { name: '发文量' },
-          rightHint: { name: '总发文量', count: '8000', haveLoad: true, more: false }
-        },
-        {
-          'x': 0, 'y': 0, 'w': 3, 'h': 3, 'i': '2', chart: 'hotModel',
-          data: {
-            arr: [
-              { name: '参与', value: 30 },
-              { name: '教育', value: 28 },
-              { name: '创新', value: 24 },
-              { name: '引导', value: 23 },
-              { name: '就业', value: 22 },
-              { name: '目标', value: 21 },
-              { name: '读书', value: 20 },
-              { name: '考试', value: 29 },
-              { name: '理解', value: 28 },
-              { name: '作业', value: 27 },
-              { name: '实验', value: 26 },
-              { name: '物理', value: 25 },
-              { name: '数学', value: 24 },
-              { name: '耐心', value: 30 },
-              { name: '放纵', value: 18 },
-              { name: '实践', value: 26 },
-              { name: '生理', value: 25 },
-              { name: '地理', value: 24 },
-              { name: '化学', value: 30 },
-              { name: '品味', value: 18 }
-            ]
-          },
-          leftHint: { name: '发文热词' },
-          rightHint: { name: null, count: null, haveLoad: true, more: false }
-        },
-        {
-          'x': 3, 'y': 0, 'w': 3, 'h': 3, 'i': '3', chart: 'papers',
-          data: {
-            name: '阅读量',
-            id: 'paperName2',
-            datax: ['01/01', '02/01', '03/01', '04/01', '05/01', '06/01', '07/01'],
-            datay: [13, 10, 20, 22, 15, 30, 90]
-          },
-          leftHint: { name: '阅读量' },
-          rightHint: { name: '总阅读量', count: '5000', haveLoad: true, more: false }
-        },
-        {
-          'x': 0, 'y': 0, 'w': 3, 'h': 3, 'i': '4', chart: 'Interaction',
-          data: {
-            arr: [
-              {
-                name: '分享量',
-                value: [12, 13, 12, 13, 12, 13, 13, 12, 13, 13, 12, 13]
-              }, {
-                name: '评论量',
-                value: [18, 22, 18, 22, 22, 18, 20, 20, 18, 22, 20, 18]
-              }, {
-                name: '点赞量',
-                value: [18, 22, 18, 22, 22, 18, 20, 20, 18, 22, 20, 18]
-              }
-            ],
-            datax: ['01/02', '02/02', '03/02', '04/02', '05/02', '06/02', '07/02', '08/02', '09/02', '10/02', '11/02', '12/02']
-          },
-          leftHint: { name: '互动情况' },
-          rightHint: { name: '总互动量', count: 89757, haveLoad: true, more: false }
-        },
-        {
-          'x': 3, 'y': 0, 'w': 3, 'h': 3, 'i': '5', chart: 'hotdocumentable',
-          data: {
-            arr: [
-              {
-                date: '2021-03-03',
-                hot: '32983',
-                title: '第八届高等学校科学研究优秀成果奖（人文社会科学）颁奖会召开'
-              }, {
-                date: '2021-03-02',
-                hot: '24216',
-                title: '创造更为公平的受教育机会 党的十八大以来，514万建档立卡贫困学生接受高等教育'
-              }, {
-                date: '2021-03-03',
-                hot: '4378',
-                title: '教育部部署做好2021年普通高校招生工作'
-              }, {
-                date: '2021-02-25',
-                hot: '1245',
-                title: '教育部启动实施新一轮审核评估 本科教育评价改革出“硬招”'
-              }, {
-                date: '2021-02-27',
-                hot: '788',
-                title: '国家中小学课程资源建设总结交流会召开'
-              }
-            ],
-            id: 'hot',
-            Sort: true // 未超过5名 前三名有样式区分
-          },
-          leftHint: { name: '热门TOP10' },
-          rightHint: { name: null, count: null, haveLoad: true, more: true }
-        },
-        {
-          'x': 0, 'y': 0, 'w': 6, 'h': 3, 'i': '6', chart: 'swappableTable',
-          data: {
-            tableHeard: [
-              {
-                type: 'index',
-                label: '排名',
-                width: '50'
-              },
-              {
-                prop: 'date',
-                label: '账号',
-                width: '180',
-                sortable: true
-              },
-              {
-                prop: 'address',
-                label: '发文总量',
-                width: '180'
-              },
-              {
-                prop: 'rijun',
-                label: '日均发文',
-                width: ''
-              },
-              {
-                prop: 'fans',
-                label: '粉丝量',
-                width: ''
-              },
-              {
-                prop: 'read',
-                label: '阅读量',
-                width: ''
-              },
-              {
-                prop: 'hudong',
-                label: '总互动量',
-                width: ''
-              },
-              {
-                prop: 'share',
-                label: '分享量',
-                width: ''
-              },
-              {
-                prop: 'com',
-                label: '评论量',
-                width: ''
-              },
-              {
-                prop: 'dianzan',
-                label: '点赞量',
-                width: ''
-              },
-              {
-                prop: 'look',
-                label: '在看量',
-                width: ''
-              }
-            ],
-            tableData: [
-              {
-                date: '人民日报',
-                address: 98987,
-                rijun: 121,
-                fans: 656,
-                read: 5355,
-                hudong: 422,
-                share: 3323,
-                com: 3412,
-                dianzan: 434,
-                look: 1223
-              },
-              {
-                date: '新华网',
-                address: 98242,
-                rijun: 3432,
-                fans: 11121,
-                read: 353,
-                hudong: 543,
-                share: 23323,
-                com: 5454,
-                dianzan: 122,
-                look: 775
-              },
-              {
-                date: '新华视点',
-                address: 121334,
-                rijun: 35435,
-                fans: 65,
-                read: 878,
-                hudong: 21231,
-                share: 122,
-                com: 434,
-                dianzan: 54554,
-                look: 57657
-              },
-              {
-                date: '人民网',
-                address: 87121,
-                rijun: 31312,
-                fans: 34234,
-                read: 3545,
-                hudong: 6565,
-                share: 12222,
-                com: 35335,
-                dianzan: 3456,
-                look: 757456
-              },
-              {
-                date: '央视新闻',
-                address: 1213423,
-                rijun: 323213,
-                fans: 2432,
-                read: 24163,
-                hudong: 4514,
-                share: 5456,
-                com: 3412,
-                dianzan: 56353,
-                look: 426565
-              }
-            ]
-          },
-          leftHint: { name: '渠道榜单' },
-          rightHint: { name: null, count: null, haveLoad: false, more: false }
-        }
-      ]
+      dialogVisiblemore: false,
+      dropConf: dropConfig.index,
+      layout: [],
+      module: 1, // 账号总览模块
+      accountListRequestList: [],
+      pageNo: 1,
+      hottoal: 0,
+      hotindex: '',
+      RMTOPData: [],
+      hotsort: true,
+      notCount: false
     }
   },
-  methods: {}
+  provide() {
+    return {
+      'app': this
+    }
+  },
+  async mounted() {
+    await this.getMyAssign()
+    this.getDropTemplate()
+  },
+  methods: {
+
+    // 更多的弹框开始 ================================================================
+    loadmoreDrag() {
+      this.dialogVisiblemore = true
+      this.activeName = '5'
+      this.hotsort = true
+      this.loadingInstance = true
+      this.loadmoreDragdata(2) // 热文TOP10
+    },
+
+    // 热门更多的分页
+    changetotalhot(val) {
+      this.pageNo = val
+      if (val !== 1) {
+        this.hotsort = false
+      } else {
+        this.hotsort = true
+      }
+      this.loadingInstance = true
+      this.loadmoreDragdata(2)
+    },
+
+    hiddendrag() {
+      this.pageNo = 1
+      this.dialogVisiblemore = false
+      this.loadmoreDragdata(2)
+    },
+
+    handleClick(tab) {
+      // 切换开启loading
+      this.loadingInstance = true
+      this.pageNo = 1
+      this.hotsort = true
+      this.hotindex = Number(tab.name)
+      this.loadmoreDragdata(Number(tab.name))
+    },
+
+    // 获取发文标题
+    getTitleName(row) {
+      return (row.video_name ? row.video_name : row.title ? row.title
+        : row.weibo_name ? row.weibo_name : row.wechat_name)
+    },
+
+    loadmoreDragdata(number) {
+      const params = {
+        // channelType: this.accountListRequestList.map(item => item.channelType),
+        channelType: 2,
+        accountListRequestList: this.accountListRequestList.filter(item => item.channelType === number),
+        startTime: this.startTime,
+        endTime: this.endTime,
+        tenantId: 5,
+        pageNo: this.pageNo,
+        pageSize: 10
+      }
+      getAnalysisOverviewHotArticle(params)
+        .then(res => {
+          if (res.success) {
+            if (res.data.length === 0) {
+              this.notCount = true
+              this.RMTOPData = []
+              this.hottoal = 0
+            } else {
+              this.notCount = false
+              this.hottoal = res.data.length > 0 ? res.data[0].total : 0
+              this.RMTOPData = res.data[0].value
+            }
+          } else {
+            this.hottoal = 0
+            this.RMTOPData = []
+          }
+          this.loadingInstance = false
+        })
+        .catch(err => {
+          console.log(err, 'errselectSexProportionList')
+        })
+    },
+    // 更多的弹框结束 ====================================================================
+
+    // 获取已选则的账号-顶部
+    async getMyAssign() {
+      const obj = {
+        tenantId: 5,
+        moduleType: 1
+      }
+      const res = await getAccountAnalysisyi(obj)
+      if (res && res.data) {
+        let selected = res.data
+        // 如果初始时没有选择 则选中全部
+        if (selected.length === 0) {
+          selected = await this.selectManagementAnalysis()
+        }
+        this.getNewAccountListRequestList(selected)
+      }
+    },
+    // 获取所有账号
+    selectManagementAnalysis() {
+      const obj = {
+        tenantId: 5,
+        pageNum: 1,
+        pageSize: 100,
+        channelType: null,
+        organizationName: '',
+        accountType: '',
+        accountName: ''
+      }
+      return new Promise((resolve, reject) => {
+        selectManagementAnalysis(obj).then(res => {
+          if (res && res.data) {
+            const cardLists = res.data
+            const arr = []
+            for (let i = 0; i < cardLists.length; i++) {
+              for (let j = 0; j < cardLists[i].data.length; j++) {
+                arr.push(cardLists[i].data[j])
+                resolve(arr)
+              }
+            }
+          }
+        }).catch(res => {
+          reject(res)
+        })
+      })
+    },
+    addAccount() {
+      console.log(this.addArr, 'this.addArr')
+      if (this.addArr.length <= 0) {
+        this.$message({
+          message: '请选择要分析的账号',
+          type: 'warning'
+        })
+        return
+      }
+      updateAccountAnalysis(this.addArr).then((res) => {
+        if (res && res.data && res.success) {
+          this.$message.success('添加成功！')
+          this.dialogVisible = false
+          // 获取普通账号数据
+          this.getNewAccountListRequestList(this.addArr)
+          for (const item in this.dropConf) {
+            // 不要从目标对象访问 Object 原型方法
+            if (Object.prototype.hasOwnProperty.call(this.dropConf, item)) {
+              this.dropConf[item].loading = true
+            }
+          }
+          this.commonChartData()
+        }
+      }).catch(() => {
+        this.loading = false
+      })
+    },
+    // 获取接口请求所需参数
+    getNewAccountListRequestList(arr) {
+      this.accountListRequestList = []
+      arr.forEach(item => {
+        this.accountListRequestList.push({
+          channelType: item.channelType,
+          accountName: item.mediaName
+        })
+      })
+    },
+    // 子組件觸發父組件的方法
+    getChildData(data) {
+      this.addArr = data
+    },
+    commonChartData() {
+      this.loadTotalData() // 获取宏观数据
+      this.loadDispatchHotWord() // 发文热词
+      this.loadSearchWenHaiHotArticle(2) // 热文TOP10
+      this.loadInteraction() // 互动量变化趋势
+      this.loadNewFansTrend() // 新增粉丝量
+      this.loadAccountRank() // 获取机构下账号各渠道榜单
+      this.loadManuscriptTrend() // 发文情况
+      this.loadReadTrend() // 阅读情况
+    },
+    // 发文情况
+    loadManuscriptTrend() {
+      const ManuscriptParam = {
+        tenantId: 5,
+        startTime: this.startTime,
+        endTime: this.endTime,
+        accountListRequestList: this.accountListRequestList,
+        timeType: this.timeType // 时间类型 1:以天为单位 2：以月为单位 3:以小时为单位
+      }
+      getManuscriptTrend(ManuscriptParam).then((res) => {
+        if (res.success) {
+          const datas = res.data[0]
+          const ids = this.dropConf.FWL
+          ids.loading = false
+          ids.data.dataX = datas.time
+          datas.data.length > 0 && (ids.data.dataY = datas.data[0].data)
+          datas.data.length === 0 ? ids.noData = true : ids.noData = false
+          ids.rightHint.count = datas.total
+        }
+      })
+    },
+    // 阅读量
+    loadReadTrend() {
+      const params = {
+        accountListRequestList: this.accountListRequestList,
+        tenantId: 5,
+        startTime: this.startTime,
+        endTime: this.endTime,
+        timeType: this.timeType // 时间类型 1:以天为单位 2：以月为单位 3:以小时为单位
+      }
+      getWechatReadTrend(params).then((res) => {
+        if (res.success) {
+          const datas = res.data[0]
+          const ids = this.dropConf.YDL
+          ids.data.dataX = datas.time
+          datas.data.length > 0 && (ids.data.dataY = datas.data[0].data)
+          datas.data.length === 0 ? ids.noData = true : ids.noData = false
+          ids.loading = false
+          ids.rightHint.count = datas.total
+        }
+      })
+    },
+    // 互动情况
+    loadInteraction() {
+      const param = {
+        accountListRequestList: this.accountListRequestList,
+        tenantId: 5,
+        startTime: this.startTime,
+        endTime: this.endTime,
+        timeType: this.timeType // 时间类型 1:以天为单位 2：以月为单位 3:以小时为单位
+      }
+      getInteractionTrend(param).then((res) => {
+        if (res.success) {
+          const datas = res.data[0]
+          this.dropConf.HDQK.data.arr = datas.data
+          this.dropConf.HDQK.data.dataX = datas.time
+          this.dropConf.HDQK.loading = false
+          this.dropConf.HDQK.rightHint.count = datas.total
+          datas.time.length === 0 ? this.dropConf.HDQK.noData = true : this.dropConf.HDQK.noData = false
+        }
+      })
+    },
+    // 发文热词
+    loadDispatchHotWord() {
+      const params = {
+        accountListRequestList: this.accountListRequestList,
+        startTime: this.startTime,
+        endTime: this.endTime,
+        tenantId: 5
+      }
+      getDispatchHotWord(params)
+        .then(res => {
+          if (res.success && res.data.length > 0) {
+            this.dropConf.FWRC.data.arr = res.data[0].value
+            this.dropConf.FWRC.loading = false
+          } else {
+            this.dropConf.FWRC.loading = false
+            this.dropConf.FWRC.noData = true
+          }
+        })
+        .catch(err => {
+          console.log(err, 'errselectSexProportionList')
+        })
+    },
+    // 热文TOP10
+    loadSearchWenHaiHotArticle(id) {
+      const params = {
+        // channelType: this.accountListRequestList.map(item => item.channelType),
+        channelType: id,
+        accountListRequestList: this.accountListRequestList.filter(item => item.channelType === id),
+        startTime: this.startTime,
+        endTime: this.endTime,
+        tenantId: 5,
+        pageNo: this.pageNo,
+        pageSize: 10
+      }
+      getAnalysisOverviewHotArticle(params)
+        .then(res => {
+          if (res.success) {
+            this.hottoal = res.data.length > 0 ? res.data[0].total : 0
+            this.dropConf.RMTOP.loading = false
+            this.dropConf.RMTOP.data.arr = res.data
+          } else {
+            this.hottoal = 0
+            this.dropConf.RMTOP.loading = false
+            this.dropConf.RMTOP.noData = true
+          }
+          this.loadingInstance = false
+        })
+        .catch(err => {
+          console.log(err, 'errselectSexProportionList')
+        })
+    },
+    // 新增粉丝量趋势图
+    loadNewFansTrend() {
+      const params = {
+        accountListRequestList: this.accountListRequestList,
+        startTime: this.startTime,
+        endTime: this.endTime,
+        tenantId: 5,
+        timeType: this.timeType
+      }
+      getNewFansTrend(params)
+        .then(res => {
+          if (res.success) {
+            const datas = res.data[0]
+            const ids = this.dropConf.XZFSL
+            ids.loading = false
+            ids.data.dataX = datas.time
+            datas.data.length > 0 && (ids.data.dataY = datas.data[0].data)
+            datas.data.length === 0 ? ids.noData = true : ids.noData = false
+          }
+        })
+        .catch(err => {
+          console.log(err, 'errselectSexProportionList')
+        })
+    },
+    // 获取机构下账号各渠道榜单
+    loadAccountRank(type = 5) {
+      const params = {
+        channelTypes: [type], // 渠道类型 1:网站 2:电子报纸 3:APP 4:微信 5:微博 6:头条 7:抖音 8:快手(RequestList中的类型集合)
+        dataType: 1, // 数据分类 1:发文量(日均发文) 2：粉丝量 3：阅读量 4：总互动量 5：分享量 6：评论量 7:点赞量 8：在看量
+        tenantId: 5,
+        accountListRequestList: this.accountListRequestList.filter(item => item.channelType === type),
+        start_time: this.startTime,
+        end_time: this.endTime,
+        timeType: this.timeType,
+        order: 1 // 排序 0:从低到高 1:从高到底
+      }
+      accountRank(params)
+        .then(res => {
+          if (res.success) {
+            res.data.length === 0 ? this.dropConf.QDBD.noData = true : this.dropConf.QDBD.noData = false
+            this.dropConf.QDBD.data.tableData = res.data
+            this.dropConf.QDBD.loading = false
+          }
+        })
+        .catch(err => {
+          console.log(err, 'errselectSexProportionList')
+        })
+    },
+    // 账号总览宏观数据
+    loadTotalData(type = 5) {
+      const params = {
+        tenantId: 5,
+        accountListRequestList: this.accountListRequestList
+      }
+      totalData(params)
+        .then(res => {
+          if (res.success) {
+            const numObj = res.data[0]
+            this.papers.forEach((item) => {
+              item.number = numObj[item.prop]
+            })
+          }
+        })
+        .catch(err => {
+          console.log(err, 'totalData')
+        })
+    }
+  }
 }
 </script>
 
@@ -315,5 +583,72 @@ export default {
   width: 80px;
   height: 30px;
   padding: 0;
+}
+
+/deep/ .el-tabs__content {
+  height: 500px;
+  overflow-y: auto;
+}
+
+.notCount {
+  text-align: center;
+  color: #A0A2B2;
+  position: relative;
+  .nodata {
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  img {
+    width: 206px;
+    height: 112px;
+  }
+  p {
+    margin-top: -10px;
+  }
+}
+
+.titleone, .middle {
+  color: #D50E0B;
+  width: 26px;
+  height: 26px;
+}
+.titletwo {
+  color: #FF8D00;
+}
+.titlethere {
+  color: #00A98B;
+}
+.indexone {
+  text-align: center;
+  color: #fff;
+  background: url(../../assets/images/hotbig1.png) no-repeat;
+  background-size: 100%;
+  width: 26px;
+  height: 26px;
+  background-position: 0px -4px;
+  font-size: 12px;
+}
+.indextwo {
+  text-align: center;
+  color: #fff;
+  background: url(../../assets/images/hotbig2.png) no-repeat center;
+  background-size: 100%;
+  background-position: 0px -4px;
+  width: 26px;
+  height: 26px;
+  font-size: 12px;
+}
+.indexthere {
+  text-align: center;
+  color: #fff;
+  background: url(../../assets/images/hotbig3.png) no-repeat center;
+  background-size: 100%;
+  background-position: 0px -4px;
+  width: 26px;
+  height: 26px;
+  font-size: 12px;
 }
 </style>

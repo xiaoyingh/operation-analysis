@@ -64,13 +64,6 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: 'examples',
-        component: () => import('@/views/accountAnalysis/examples'), // Parent router-view
-        name: 'examples',
-        meta: {
-          title: '示例'
-        }
-      }, {
         path: 'analysisIndex',
         component: () => import('@/views/accountAnalysis/index'), // Parent router-view
         name: 'analysisIndex',

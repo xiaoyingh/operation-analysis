@@ -35,3 +35,64 @@ export function newFansContrast(data) {
     data
   })
 }
+// 对比分析-短视频新增粉丝量对比
+export function newFansContrastVideo(data) {
+  return request({
+    url: 'shortVideoContrast/newFansContrast',
+    method: 'post',
+    data
+  })
+}
+
+// 对比分析-微博新增粉丝量对比
+export function mblogFansContrast(data) {
+  return request({
+    url: 'mblogContranst/newFansContrast',
+    method: 'post',
+    data
+  })
+}
+
+// 对比分析-微信发文变化趋势
+export function newTraditionManuscriptTrend(data) {
+  return request({
+    url: 'tradition/getTraditionManuscriptTrend',
+    method: 'post',
+    data
+  })
+}
+
+// 对比分析-微信发文变化趋势
+export function newInteractionTrend(data) {
+  return request({
+    url: 'wechatOrMblog/getInteractionTrend',
+    method: 'post',
+    data
+  })
+}
+
+// 对比分析 - 微博热文top10
+export function getContrastHotArticleexport(data) {
+  return request({
+    url: 'wenHaiHotArticle/getContrastHotArticle',
+    method: 'post',
+    data
+  })
+}
+
+// 所属机构获取
+export function getOrganizeName(data) {
+  return request({
+    url: 'accountAnalysis/getOrganizeName',
+    method: 'post',
+    data
+  })
+}
+// 获取已经查询的账号列表
+export function getAccountAnalysisyi(data) {
+  return request({
+    url: 'accountAnalysis/selectAccountAnalysis',
+    method: 'post',
+    data
+  })
+}

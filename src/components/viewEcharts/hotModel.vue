@@ -15,6 +15,16 @@ export default {
   data() {
     return {}
   },
+  watch: {
+    chartData: {
+      handler: function() {
+        this.$nextTick(() => {
+          this.initChart()
+        })
+      },
+      deep: true
+    }
+  },
   mounted() {
     this.initChart()
   },
@@ -42,12 +52,6 @@ export default {
       for (var i = 0; i < presents.length; ++i) {
         data.push(presents[i])
       }
-      // for (var i = 10; i < presents.length; ++i) {
-      //   var cnt = Math.floor(Math.random() * 10)
-      //   for (var j = 0; j < cnt; ++j) {
-      //     data.push(presents[i])
-      //   }
-      // }
       const option = {
         tooltip: {
           backgroundColor: '#fff',
@@ -72,51 +76,51 @@ export default {
           max: 100,
           show: false
         },
-        series: [{
-          zlevel: -1,
-          type: 'pictorialBar',
-          name: 'pictorial',
-          silent: true,
-          symbol: 'image://' + symbolUrl, // 按背景渲染云词
-          symbolSize: ['70%', '80%'],
-          symbolPosition: 'center',
-          barWidth: '100%',
-          barMaxWidth: '100%',
-          itemStyle: {
-            normal: {
-              opacity: 0// 自己项目中这里可以设置0全透明，然后可以写一个div背景加载一个美化过的云图片，重合放在这个图表下面。
-            }
-          },
-          data: [{
-            value: 100
-          }]
-        },
-        {
-          type: 'wordCloud',
-          sizeRange: [8, 36],
-          rotationRange: [0, 0],
-          maskImage: maskImage,
-          textPadding: 0,
-          gridSize: 5, // 用于标记画布可用性的网格大小（以像素为单位）//字距越大，字距越大。
-          width: '69%',
-          height: '79%',
-          left: 'center',
-          top: 'center',
-          drawOutOfBound: false,
-          textStyle: {
-            normal: {
-              fontFamily: 'sans-serif',
-              color: function() {
-                let index = Math.floor(Math.random() * colorList.length);
-                return colorList[index];
+        series: [
+          {
+            zlevel: -1,
+            type: 'pictorialBar',
+            name: 'pictorial',
+            silent: true,
+            symbol: 'image://' + symbolUrl, // 按背景渲染云词
+            symbolSize: ['70%', '80%'],
+            symbolPosition: 'center',
+            barWidth: '100%',
+            barMaxWidth: '100%',
+            itemStyle: {
+              normal: {
+                opacity: 0// 自己项目中这里可以设置0全透明，然后可以写一个div背景加载一个美化过的云图片，重合放在这个图表下面。
               }
-            }
+            },
+            data: [{
+              value: 100
+            }]
           },
-          data: data
-        },
+          {
+            type: 'wordCloud',
+            sizeRange: [12, 36],
+            rotationRange: [0, 0],
+            maskImage: maskImage,
+            textPadding: 0,
+            gridSize: 5, // 用于标记画布可用性的网格大小（以像素为单位）//字距越大，字距越大。
+            width: '69%',
+            height: '79%',
+            left: 'center',
+            top: 'center',
+            drawOutOfBound: false,
+            textStyle: {
+              normal: {
+                fontFamily: 'sans-serif',
+                color: function() {
+                  const index = Math.floor(Math.random() * colorList.length)
+                  return colorList[index]
+                }
+              }
+            },
+            data: data
+          }
         ]
       }
-
       myChartChina.setOption(option)
       myChartChina.resize()
       window.onresize = function() {

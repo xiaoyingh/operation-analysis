@@ -17,20 +17,40 @@ export default {
       chart: null
     }
   },
+  watch: {
+    chartData: {
+      handler: function() {
+        this.$nextTick(() => {
+          this.initChart()
+        })
+      },
+      deep: true
+    }
+  },
   mounted() {
     this.initChart()
   },
   methods: {
     initChart() {
+      const mapData = this.chartData.data
       const myChartContainer = this.$refs.areatus
       const myChartChina = this.$echarts.init(myChartContainer)
-      const color = ['#6D93FE', '#FFBB33', '#FF8066', '#52CCA3']
-
-      const optionMap = {
-        color,
-        dataset: {
-          source: this.chartData.arr
-        },
+      const seriesData = []
+      const lineColor = ['#6D93FE', '#7266FF', '#52CCA3', '#FFBB33', '#FF8066', '#7D8FB3']
+      for (let i = 0; i < mapData.length; i++) {
+        seriesData.push({
+          name: mapData[i].name,
+          stack: mapData[i].stack,
+          type: 'bar',
+          barWidth: this.chartData.time.length > 20 ? 8 : 30, // 柱图宽度
+          itemStyle: {
+            color: lineColor[i]
+          },
+          data: mapData[i].data
+        })
+        // legend.push(mapData[i].name)
+      }
+      const option = {
         tooltip: {
           trigger: 'axis',
           backgroundColor: '#fff',
@@ -65,6 +85,7 @@ export default {
         },
         xAxis: {
           type: 'category',
+          data: this.chartData.time,
           axisLine: {
             lineStyle: {
               type: 'solid',
@@ -73,6 +94,7 @@ export default {
             }
           },
           axisLabel: {
+            interval: this.chartData.time.length > 20 ? 2 : 0,
             textStyle: {
               color: '#999' // 坐标值得具体的颜色
             }
@@ -95,13 +117,10 @@ export default {
             color: '#999'
           }
         },
-        series: [
-          { type: 'bar' },
-          { type: 'bar' },
-          { type: 'bar' }
-        ]
+        series: seriesData
       }
-      myChartChina.setOption(optionMap)
+
+      myChartChina.setOption(option)
       myChartChina.resize()
       window.onresize = () => {
         myChartChina.resize()

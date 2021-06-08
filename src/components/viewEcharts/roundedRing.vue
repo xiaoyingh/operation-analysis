@@ -1,19 +1,28 @@
 <template>
   <div id="roundRing" ref="roundRing" style="width: 100%; height: 100%" />
-<!--  <div id="roundRing" :style="{width: '100%', height: '400px'}" />-->
 </template>
 <!-- 圆形饼图 -->
 <script>
 export default {
   props: {
     chartData: {
-      type: Object,
+      type: Array,
       default: () => []
     }
   },
   data() {
     return {
       chart: null
+    }
+  },
+  watch: {
+    chartData: {
+      handler: function() {
+        this.$nextTick(() => {
+          this.initChart()
+        })
+      },
+      deep: true
     }
   },
   mounted() {
@@ -27,11 +36,13 @@ export default {
     this.chart = null
   },
   methods: {
+    aaa(q) {
+      console.log(q)
+    },
     initChart() {
-      // const myChartContainer = document.getElementById('roundRing')
       const myChartContainer = this.$refs.roundRing
       const myChartChina = this.$echarts.init(myChartContainer)
-      // let dataArr = this.chartData
+      const sum = this.chartData[0].value + this.chartData[1].value
       const placeHolderStyle = {
         normal: {
           label: {
@@ -50,7 +61,9 @@ export default {
       }
       const dataStyleMan = {
         normal: {
-          formatter: `{c}%\n男`,
+          formatter: (params) => {
+            return `${params.percent}%\n${this.chartData[0].name}`
+          },
           position: 'center',
           show: true,
           textStyle: {
@@ -62,7 +75,9 @@ export default {
       }
       const dataStyleWo = {
         normal: {
-          formatter: '{c}%\n女',
+          formatter: (params) => {
+            return `${params.percent}%\n${this.chartData[1].name}`
+          },
           position: 'center',
           show: true,
           textStyle: {
@@ -75,7 +90,7 @@ export default {
       const option = {
         backgroundColor: '#fff',
         title: [{
-          text: '男性 722600',
+          text: `${this.chartData[0].name}性 ${this.chartData[0].value}`,
           left: '29.8%',
           top: '75%',
           textAlign: 'center',
@@ -86,7 +101,7 @@ export default {
             textAlign: 'center'
           }
         }, {
-          text: '女性 192600',
+          text: `${this.chartData[1].name}性 ${this.chartData[1].value}`,
           left: '70%',
           top: '75%',
           textAlign: 'center',
@@ -98,122 +113,123 @@ export default {
           }
         }],
         // 第一个图表
-        series: [{
-          type: 'pie',
-          hoverAnimation: false, // 鼠标经过的特效
-          radius: ['32%', '40%'],
-          center: ['30%', '50%'],
-          startAngle: 225,
-          labelLine: {
-            normal: {
-              show: false
-            }
-          },
-          label: {
-            normal: {
-              position: 'center'
-            }
-          },
-          data: [{
-            value: 100,
-            itemStyle: {
+        series: [
+          {
+            type: 'pie',
+            hoverAnimation: false, // 鼠标经过的特效
+            radius: ['32%', '40%'],
+            center: ['30%', '50%'],
+            startAngle: 225,
+            labelLine: {
               normal: {
-                color: '#EBEEF5'
-              }
-            }
-          }]
-        },
-        // 上层环形配置
-        {
-          type: 'pie',
-          hoverAnimation: false, // 鼠标经过的特效
-          radius: ['32%', '40%'],
-          center: ['30%', '50%'],
-          startAngle: 225,
-          labelLine: {
-            normal: {
-              show: false
-            }
-          },
-          label: {
-            normal: {
-              position: 'center'
-            },
-            capType: 'round' // 圆角 || butt 平角
-          },
-          data: [{
-            value: 35,
-            itemStyle: {
-              normal: {
-                color: '#F67F67'
+                show: false
               }
             },
-            label: dataStyleMan
-          }, {
-            value: 35,
-            itemStyle: placeHolderStyle
-          }
-          ]
-        },
-        // 第二个图表
-        {
-          type: 'pie',
-          hoverAnimation: false,
-          radius: ['32%', '40%'],
-          center: ['70%', '50%'],
-          startAngle: 225,
-          labelLine: {
-            normal: {
-              show: false
-            }
-          },
-          label: {
-            normal: {
-              position: 'center'
-            }
-          },
-          data: [{
-            value: 100,
-            itemStyle: {
+            label: {
               normal: {
-                color: '#EBEEF5'
+                position: 'center'
               }
+            },
+            data: [{
+              value: sum,
+              itemStyle: {
+                normal: {
+                  color: '#EBEEF5'
+                }
+              }
+            }]
+          },
+          // 上层环形配置
+          {
+            type: 'pie',
+            hoverAnimation: false, // 鼠标经过的特效
+            radius: ['32%', '40%'],
+            center: ['30%', '50%'],
+            startAngle: 225,
+            labelLine: {
+              normal: {
+                show: false
+              }
+            },
+            label: {
+              normal: {
+                position: 'center'
+              },
+              capType: 'round' // 圆角 || butt 平角
+            },
+            data: [{
+              value: this.chartData[0].value / sum * 100,
+              itemStyle: {
+                normal: {
+                  color: '#6699FF'
+                }
+              },
+              label: dataStyleMan
+            }, {
+              value: 100 - this.chartData[0].value / sum * 100,
+              itemStyle: placeHolderStyle
             }
+            ]
+          },
+          // 第二个图表
+          {
+            type: 'pie',
+            hoverAnimation: false,
+            radius: ['32%', '40%'],
+            center: ['70%', '50%'],
+            startAngle: 225,
+            labelLine: {
+              normal: {
+                show: false
+              }
+            },
+            label: {
+              normal: {
+                position: 'center'
+              }
+            },
+            data: [{
+              value: sum,
+              itemStyle: {
+                normal: {
+                  color: '#EBEEF5'
+                }
+              }
 
-          }
-          ]
-        },
-        // 上层环形配置
-        {
-          type: 'pie',
-          hoverAnimation: false,
-          radius: ['32%', '40%'],
-          center: ['70%', '50%'],
-          startAngle: 225,
-          labelLine: {
-            normal: {
-              show: false
             }
+            ]
           },
-          label: {
-            normal: {
-              position: 'center'
-            }
-          },
-          data: [{
-            value: 30,
-            itemStyle: {
+          // 上层环形配置
+          {
+            type: 'pie',
+            hoverAnimation: false,
+            radius: ['32%', '40%'],
+            center: ['70%', '50%'],
+            startAngle: 225,
+            labelLine: {
               normal: {
-                color: '#6699FF'
+                show: false
               }
             },
-            label: dataStyleWo
-          }, {
-            value: 55,
-            itemStyle: placeHolderStyle
+            label: {
+              normal: {
+                position: 'center'
+              }
+            },
+            data: [{
+              value: this.chartData[1].value / sum * 100,
+              itemStyle: {
+                normal: {
+                  color: '#F67F67'
+                }
+              },
+              label: dataStyleWo
+            }, {
+              value: 100 - this.chartData[1].value / sum * 100,
+              itemStyle: placeHolderStyle
+            }
+            ]
           }
-          ]
-        }
         ]
       }
       myChartChina.setOption(option)

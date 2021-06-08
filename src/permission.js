@@ -19,7 +19,6 @@ router.beforeEach(async(to, from, next) => {
 
   // determine whether the user has logged in
   const hasToken = getToken()
-
   if (hasToken) {
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
@@ -51,8 +50,8 @@ router.beforeEach(async(to, from, next) => {
     if (userData === '') {
       await store.dispatch('user/getInfo')
       userData = store.getters.userData
-      const permList = userData.permList
-      // const permList = asyncRoutes
+      // const permList = userData.permList
+      const permList = asyncRoutes
       const accessRoutes = await store.dispatch('permission/generateRoutes', permList)
       router.addRoutes(accessRoutes)
       next({ ...to, replace: true })

@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100%;">
+  <div style="height: 100%;" class="hot-article">
     <el-tabs v-model="activeName" style="height: 100%;" @tab-click="handleClick">
       <el-tab-pane
         v-for="(item,index) in tabList"
@@ -7,25 +7,25 @@
         :label="item.name"
         :name="item.id"
       />
-      <div class="channel-main" style="height: calc(100% - 44px)">
-        <div v-if="chartData.tableData.length === 0" class="notCount">
+      <div ref="articlemain" v-loading="loadingInstance" class="article-main" style="height: calc(100% - 44px)">
+        <div v-if="chartData.arr.length === 0" class="notCount">
           <div class="nodata">
             <img src="@/assets/images/nodata.png" alt="">
             <p>暂无统计数据</p>
           </div>
         </div>
-        <common-table :chart-data="chartData" style="height: 100%;" />
+        <totaltable v-else :chart-data="chartData" style="height: 100%;" />
       </div>
     </el-tabs>
   </div>
 </template>
 
 <script>
-import CommonTable from '@/components/viewEcharts/commonTable'
+import Totaltable from '@/components/viewEcharts/hotdocumentable'
 
 export default {
-  name: 'SwappableTable',
-  components: { CommonTable },
+  name: 'HotArticleMore',
+  components: { Totaltable },
   props: {
     chartData: {
       type: Object,
@@ -44,14 +44,15 @@ export default {
         { name: '电子报纸榜单', id: '2' }
       ],
       tableData: [],
-      loadingInstance: ''
+      loadingInstance: '',
+      pageNo: 1
     }
   },
   watch: {
     chartData: {
       handler: function(n) {
         // 拿到数据后关闭loading
-        this.loadingInstance.close()
+        this.loadingInstance = false
       },
       deep: true
     }
@@ -60,18 +61,25 @@ export default {
   methods: {
     handleClick(tab) {
       // 切换开启loading
-      this.loadingInstance = this.$loading({
-        fullscreen: true,
-        target: document.querySelector('.channel-main'),
-        background: 'rgba(255, 255, 255, 0.9)'
-      })
-      this.app.loadAccountRank(Number(tab.name))
+      this.loadingInstance = true
+      // this.loadingInstance = this.$loading({
+      //   fullscreen: true,
+      //   target: this.$refs.articlemain,
+      //   background: 'rgba(255, 255, 255, 0.9)'
+      // })
+      console.log(tab, this.chartData.arr, '++++')
+      // 调用父组件方法
+      this.app.loadSearchWenHaiHotArticle(Number(tab.name))
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
+/deep/ .el-tabs__content {
+  height: 100%;
+  overflow-y: auto;
+}
 .notCount {
   text-align: center;
   color: #A0A2B2;

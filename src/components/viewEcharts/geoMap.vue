@@ -1,6 +1,6 @@
 <template>
   <div style="display: flex;width: 100%; height: 100%">
-    <div id="geomap" ref="geomap" style="width: 70%; height: 100%"></div>
+    <div id="geomap" ref="geomap" style="width: 70%; height: 100%" />
     <div class="geoTable">
       <div v-for="(item,index) in dataList" :key="index" class="geoList">
         <div class="imgTxt" :class="index+1 ? 'order'+index:''">{{ index+1 }}</div>
@@ -31,6 +31,16 @@ export default {
     return {
       chart: null,
       dataList: ''
+    }
+  },
+  watch: {
+    chartData: {
+      handler: function() {
+        this.$nextTick(() => {
+          this.initChart()
+        })
+      },
+      deep: true
     }
   },
   mounted() {

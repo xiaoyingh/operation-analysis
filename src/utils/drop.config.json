@@ -1,0 +1,1259 @@
+{
+  "index": {
+    "XZFSL": {
+      "data": {
+        "dataX": [
+        ],
+        "dataY": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": true,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "FWL": {
+      "data": {
+        "dataY": [
+        ],
+        "dataX": [
+        ]
+      },
+      "rightHint": {
+        "name": "总发文量",
+        "count": null,
+        "haveLoad": true,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "FWRC": {
+      "data": {
+        "arr": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": true,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "YDL": {
+      "data": {
+        "name": "阅读量",
+        "dataX": [
+        ],
+        "dataY": [
+        ]
+      },
+      "rightHint": {
+        "name": "总阅读量",
+        "count": null,
+        "haveLoad": true,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "HDQK": {
+      "data": {
+        "arr": [
+        ],
+        "dataX": [
+        ]
+      },
+      "rightHint": {
+        "name": "总互动量",
+        "count": null,
+        "haveLoad": true,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "RMTOP": {
+      "data": {
+        "arr": [
+        ],
+        "Sort": true
+      },
+      "leftHint": {
+        "name": "热门TOP10"
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": true,
+        "more": true
+      },
+      "loading": true,
+      "noData": false
+    },
+    "QDBD": {
+      "data": {
+        "tableHeard": [
+          {
+            "type": "index",
+            "label": "排名",
+            "width": "50"
+          },
+          {
+            "prop": "accountName",
+            "label": "账号",
+            "width": "180",
+            "sortable": true
+          },
+          {
+            "prop": "articlesCount",
+            "label": "发文总量",
+            "width": "180"
+          },
+          {
+            "prop": "dailyArticlesCount",
+            "label": "日均发文",
+            "width": ""
+          },
+          {
+            "prop": "fansCount",
+            "label": "粉丝量",
+            "width": ""
+          },
+          {
+            "prop": "readCount",
+            "label": "阅读量",
+            "width": ""
+          },
+          {
+            "prop": "interactionCount",
+            "label": "总互动量",
+            "width": ""
+          },
+          {
+            "prop": "rttCount",
+            "label": "分享量",
+            "width": ""
+          },
+          {
+            "prop": "cmtCount",
+            "label": "评论量",
+            "width": ""
+          },
+          {
+            "prop": "upCount",
+            "label": "点赞量",
+            "width": ""
+          },
+          {
+            "prop": "zaikanCount",
+            "label": "在看量",
+            "width": ""
+          }
+        ],
+        "tableData": [
+        ]
+      },
+      "leftHint": {
+        "name": "渠道榜单"
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    }
+  },
+  "wxA": {
+    "FWQK": {
+      "data": {
+        "name": "发文情况",
+        "id": "paperName",
+        "dataX": [
+        ],
+        "dataY": [
+        ]
+      },
+      "rightHint": {
+        "name": "总发文量",
+        "count": 89757,
+        "haveLoad": true,
+        "more": false
+      },
+      "moved": false,
+      "loading": true,
+      "noData": false
+    },
+    "FWXG": {
+      "data": {
+        "arr": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": true,
+        "more": false
+      },
+      "moved": false,
+      "loading": true,
+      "noData": false
+    },
+    "FWRC": {
+      "data": {
+        "arr": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": true,
+        "more": false
+      },
+      "moved": false,
+      "loading": true,
+      "noData": false
+    },
+    "YDQK": {
+      "data": {
+        "dataX": [
+        ],
+        "dataY": [
+        ]
+      },
+      "rightHint": {
+        "name": "总阅读量",
+        "count": 89757,
+        "haveLoad": true,
+        "more": false
+      },
+      "moved": false,
+      "loading": true,
+      "noData": false
+    },
+    "HDQK": {
+      "rightHint": {
+        "name": "总互动量",
+        "count": 89757,
+        "haveLoad": true,
+        "more": false
+      },
+      "data": {
+        "arr": [
+        ],
+        "dataX": [
+        ]
+      },
+      "moved": false,
+      "loading": true,
+      "noData": false
+    },
+    "RMTOP": {
+      "data": {
+        "arr": [
+        ],
+        "Sort": true
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": true,
+        "more": true
+      },
+      "moved": false,
+      "loading": true,
+      "noData": false
+    }
+  },
+  "wxAVip": {
+    "FSDYFB": {
+      "data": {
+        "arr": [
+        ]
+      },
+      "rightHint": {
+        "name": "总粉丝量",
+        "count": null,
+        "haveLoad": true
+      },
+      "loading": true,
+      "noData": false
+    },
+    "FSXBBL": {
+      "data": [
+        {
+          "name": "",
+          "value": ""
+        },
+        {
+          "name": "",
+          "value": ""
+        }
+      ],
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "FSBHL": {
+      "data": {
+        "name": "粉丝关注变化量",
+        "id": "paperName3",
+        "dataX": [
+        ],
+        "dataY": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": true,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    }
+  },
+  "MBlogA": {
+    "FWQK": {
+      "data": {
+        "name": "发文情况",
+        "id": "paperName",
+        "dataX": [
+        ],
+        "dataY": [
+        ]
+      },
+      "rightHint": {
+        "name": "总发文量",
+        "count": "1000",
+        "haveLoad": true,
+        "more": false
+      }
+    },
+    "FWXG": {
+      "data": {
+        "arr": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": true,
+        "more": false
+      }
+    },
+    "FWRC": {
+      "data": {
+        "arr": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": true,
+        "more": false
+      }
+    },
+    "YDQK": {
+      "data": {
+        "dataY": [
+        ],
+        "dataX": [
+        ]
+      },
+      "rightHint": {
+        "name": "总阅读量",
+        "count": 89757,
+        "haveLoad": true,
+        "more": false
+      }
+    },
+    "HDQK": {
+      "data": {
+        "arr": [
+        ],
+        "dataX": [
+        ]
+      },
+      "rightHint": {
+        "name": "总互动量",
+        "count": 5000,
+        "haveLoad": true,
+        "more": false
+      }
+    },
+    "RMTOP": {
+      "data": {
+        "arr": [
+        ],
+        "Sort": true
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": true,
+        "more": true
+      }
+    }
+  },
+  "MBlogAVip": {
+    "FSDYFB": {
+      "data": {
+        "arr": [
+        ]
+      },
+      "rightHint": {
+        "name": "总粉丝量",
+        "count": null,
+        "haveLoad": true
+      },
+      "loading": true,
+      "noData": false
+    },
+    "FSXBBL": {
+      "data": [
+        {
+          "name": "",
+          "value": ""
+        },
+        {
+          "name": "",
+          "value": ""
+        }
+      ],
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "FSBHL": {
+      "data": {
+        "name": "粉丝关注变化量",
+        "id": "paperName3",
+        "dataX": [
+        ],
+        "dataY": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": true,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    }
+  },
+  "shortVideoAVip": {
+    "FSDYFB": {
+      "data": {
+        "arr": [
+        ]
+      },
+      "rightHint": {
+        "name": "总粉丝量",
+        "count": null,
+        "haveLoad": true
+      },
+      "loading": true,
+      "noData": false
+    },
+    "FSXBBL": {
+      "data": [
+        {
+          "name": "",
+          "value": ""
+        },
+        {
+          "name": "",
+          "value": ""
+        }
+      ],
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "FSBHL": {
+      "data": {
+        "name": "粉丝关注变化量",
+        "id": "paperName3",
+        "dataX": [
+        ],
+        "dataY": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": true,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "HDLDB": {
+      "data": {
+        "data": [
+        ],
+        "time": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    }
+  },
+  "shortVideoA": {
+    "FSPBHL": {
+      "data": {
+        "dataX": [
+        ],
+        "dataY": [
+        ]
+      },
+      "rightHint": {
+        "name": "总发视频量",
+        "count": "5600",
+        "haveLoad": true,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "FSPXG": {
+      "data": {
+        "arr": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": true,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "YDQK": {
+      "data": {
+        "id": "reading",
+        "dataX": [
+        ],
+        "dataY": [
+        ]
+      },
+      "rightHint": {
+        "name": "总阅读量",
+        "count": "6000",
+        "haveLoad": true,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "HDQK": {
+      "data": {
+        "arr": [
+        ],
+        "dataX": [
+        ]
+      },
+      "rightHint": {
+        "name": "总互动量",
+        "count": "9000",
+        "haveLoad": true,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "RMTOP": {
+      "data": {
+        "arr": [
+        ],
+        "Sort": true
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": true,
+        "more": true
+      },
+      "loading": true,
+      "noData": false
+    }
+  },
+  "traditional": {
+    "FWQK": {
+      "data": {
+        "name": "发文情况",
+        "id": "paperName",
+        "dataX": [
+        ],
+        "dataY": [
+        ]
+      },
+      "rightHint": {
+        "name": "总发文量",
+        "count": null,
+        "haveLoad": true,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "FWXG": {
+      "data": {
+        "arr": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": true,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "FWRC": {
+      "data": {
+        "arr": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": true,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "RMTOP": {
+      "data": {
+        "arr": [
+        ],
+        "Sort": true
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": true,
+        "more": true
+      },
+      "loading": true,
+      "noData": false
+    }
+  },
+  "wxC": {
+    "ZHLB": {
+      "data": {
+        "tableHeard": [
+          {
+            "type": "index",
+            "label": "排名",
+            "width": "50"
+          },
+          {
+            "prop": "accountName",
+            "label": "账号",
+            "width": "180",
+            "sortable": true
+          },
+          {
+            "prop": "articlesCount",
+            "label": "发文总量",
+            "width": "180"
+          },
+          {
+            "prop": "dailyArticlesCount",
+            "label": "日均发文",
+            "width": ""
+          },
+          {
+            "prop": "fansCount",
+            "label": "粉丝量",
+            "width": ""
+          },
+          {
+            "prop": "rttCount",
+            "label": "转发数",
+            "width": ""
+          },
+          {
+            "prop": "readCount",
+            "label": "阅读量",
+            "width": ""
+          },
+          {
+            "prop": "interactionCount",
+            "label": "总互动量",
+            "width": ""
+          },
+          {
+            "prop": "cmtCount",
+            "label": "评论量",
+            "width": ""
+          },
+          {
+            "prop": "upCount",
+            "label": "点赞量",
+            "width": ""
+          },
+          {
+            "prop": "zaikanCount",
+            "label": "在看量",
+            "width": ""
+          }
+        ],
+        "tableData": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "FWL": {
+      "data": {
+        "data": [
+        ],
+        "time": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "FWRCDB": {
+      "data": [
+      ],
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "YDBHL": {
+      "data": {
+        "data": [
+        ],
+        "time": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "HDLBH": {
+      "data": {
+        "data": [
+        ],
+        "time": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "RMTOP": {
+      "data": {
+        "arr": [
+        ],
+        "Sort": true
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false,
+        "more": true
+      },
+      "loading": true,
+      "noData": false
+    },
+    "XZFSLDB": {
+      "data": {
+        "data": [
+        ],
+        "time": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    }
+  },
+  "MBlogC": {
+    "ZHLB": {
+      "data": {
+        "tableHeard": [
+          {
+            "type": "index",
+            "label": "排名",
+            "width": "50"
+          },
+          {
+            "prop": "accountName",
+            "label": "账号",
+            "width": "180",
+            "sortable": true
+          },
+          {
+            "prop": "articlesCount",
+            "label": "发文总量",
+            "width": "180"
+          },
+          {
+            "prop": "dailyArticlesCount",
+            "label": "日均发文",
+            "width": ""
+          },
+          {
+            "prop": "fansCount",
+            "label": "粉丝量",
+            "width": ""
+          },
+          {
+            "prop": "rttCount",
+            "label": "转发数",
+            "width": ""
+          },
+          {
+            "prop": "readCount",
+            "label": "阅读量",
+            "width": ""
+          },
+          {
+            "prop": "interactionCount",
+            "label": "总互动量",
+            "width": ""
+          },
+          {
+            "prop": "cmtCount",
+            "label": "评论量",
+            "width": ""
+          },
+          {
+            "prop": "upCount",
+            "label": "点赞量",
+            "width": ""
+          },
+          {
+            "prop": "zaikanCount",
+            "label": "在看量",
+            "width": ""
+          }
+        ],
+        "tableData": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "FWLDB": {
+      "data": {
+        "data": [
+        ],
+        "time": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "FWRCDB": {
+      "data": [
+      ],
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "HDLDB": {
+      "data": {
+        "data": [
+        ],
+        "time": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "RMTOP": {
+      "data": {
+        "arr": [
+        ],
+        "Sort": true
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false,
+        "more": true
+      },
+      "loading": true,
+      "noData": false
+    },
+    "XZFSLDB": {
+      "data": {
+        "arr": [
+        ],
+        "arrX": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    }
+  },
+  "shortVideoC": {
+    "ZHLB": {
+      "data": {
+        "tableHeard": [
+          {
+            "type": "index",
+            "label": "排名",
+            "width": "50"
+          },
+          {
+            "prop": "accountName",
+            "label": "账号",
+            "width": "180",
+            "sortable": true
+          },
+          {
+            "prop": "articlesCount",
+            "label": "发文总量",
+            "width": "180"
+          },
+          {
+            "prop": "dailyArticlesCount",
+            "label": "日均发文",
+            "width": ""
+          },
+          {
+            "prop": "fansCount",
+            "label": "粉丝量",
+            "width": ""
+          },
+          {
+            "prop": "rttCount",
+            "label": "转发数",
+            "width": ""
+          },
+          {
+            "prop": "readCount",
+            "label": "阅读量",
+            "width": ""
+          },
+          {
+            "prop": "interactionCount",
+            "label": "总互动量",
+            "width": ""
+          },
+          {
+            "prop": "cmtCount",
+            "label": "评论量",
+            "width": ""
+          },
+          {
+            "prop": "upCount",
+            "label": "点赞量",
+            "width": ""
+          },
+          {
+            "prop": "zaikanCount",
+            "label": "在看量",
+            "width": ""
+          }
+        ],
+        "tableData": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "FSPLDB": {
+      "data": {
+        "data": [
+        ],
+        "time": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "BFLDB": {
+      "data": {
+        "data": [
+        ],
+        "time": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "HDLDB": {
+      "data": {
+        "data": [
+        ],
+        "time": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "RMTOP": {
+      "data": {
+        "arr": [
+        ],
+        "Sort": true
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false,
+        "more": true
+      },
+      "loading": true,
+      "noData": false
+    },
+    "XZFSLDB": {
+      "data": {
+        "arr": [
+        ],
+        "arrX": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    }
+  },
+  "traditionalC": {
+    "ZHLB": {
+      "data": {
+        "tableHeard": [
+          {
+            "type": "index",
+            "label": "排名",
+            "width": "50"
+          },
+          {
+            "prop": "accountName",
+            "label": "账号",
+            "width": "180",
+            "sortable": true
+          },
+          {
+            "prop": "articlesCount",
+            "label": "发文总量",
+            "width": "180"
+          },
+          {
+            "prop": "dailyArticlesCount",
+            "label": "日均发文",
+            "width": ""
+          },
+          {
+            "prop": "fansCount",
+            "label": "粉丝量",
+            "width": ""
+          },
+          {
+            "prop": "rttCount",
+            "label": "转发数",
+            "width": ""
+          },
+          {
+            "prop": "readCount",
+            "label": "阅读量",
+            "width": ""
+          },
+          {
+            "prop": "interactionCount",
+            "label": "总互动量",
+            "width": ""
+          },
+          {
+            "prop": "cmtCount",
+            "label": "评论量",
+            "width": ""
+          },
+          {
+            "prop": "upCount",
+            "label": "点赞量",
+            "width": ""
+          },
+          {
+            "prop": "zaikanCount",
+            "label": "在看量",
+            "width": ""
+          }
+        ],
+        "tableData": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "FWLDB": {
+      "data": {
+        "data": [
+        ],
+        "time": [
+        ]
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "FWRCDB": {
+      "data": [
+      ],
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false,
+        "more": false
+      },
+      "loading": true,
+      "noData": false
+    },
+    "RMTOP": {
+      "data": {
+        "arr": [
+        ],
+        "Sort": true
+      },
+      "rightHint": {
+        "name": null,
+        "count": null,
+        "haveLoad": false,
+        "more": true
+      },
+      "loading": true,
+      "noData": false
+    }
+  }
+}

@@ -1,9 +1,11 @@
 <template>
-  <div class="totaltable">
-    <div v-if="chartData.Sort" style="width:100%">
+  <div class="totaltable" style="width:100%;height:100%;display:flex">
+    <div v-for="(item,index) in chartData.arr" :key="index" :style="calcWidth" class="hotText">
+      <p v-if="item.name" class="hotBoxTitle">{{ item.name }}</p>
       <el-table
-        :data="chartData.arr"
-        style="width: 100%"
+        :data="item.articles?item.articles:item.value"
+        style="padding: 0 0 0 16px;"
+        stripe
       >
         <el-table-column
           type="index"
@@ -31,76 +33,44 @@
         >
           <template slot-scope="scope">
             <div v-if="scope.$index==0" class="titleone">
-              {{ scope.row.title }}
+              {{ getTitleName(scope.row) }}
             </div>
             <div v-else-if="scope.$index==1" class="titletwo">
-              {{ scope.row.title }}
+              {{ getTitleName(scope.row) }}
             </div>
             <div v-else-if="scope.$index==2" class="titlethere">
-              {{ scope.row.title }}
+              {{ getTitleName(scope.row) }}
             </div>
-            <div v-else class="title-four">
-              {{ scope.row.title }}
+            <div v-else>
+              {{ getTitleName(scope.row) }}
             </div>
           </template>
         </el-table-column>
-
         <el-table-column
-          prop="date"
+          prop="pubtime"
           label="发文时间"
         />
         <el-table-column
-          prop="hot"
+          prop="trans_num"
           label="热度值"
         >
           <template slot-scope="scope">
             <div v-if="scope.$index==0" class="titleone">
-              {{ scope.row.hot }}
+              {{ isNaN(scope.row.trans_num) ? scope.row.interaction_num : scope.row.trans_num }}
             </div>
             <div v-else-if="scope.$index==1" class="titletwo">
-              {{ scope.row.hot }}
+              {{ isNaN(scope.row.trans_num) ? scope.row.interaction_num : scope.row.trans_num }}
             </div>
             <div v-else-if="scope.$index==2" class="titlethere">
-              {{ scope.row.hot }}
+              {{ isNaN(scope.row.trans_num) ? scope.row.interaction_num : scope.row.trans_num }}
             </div>
             <div v-else>
-              {{ scope.row.hot }}
+              {{ isNaN(scope.row.trans_num) ? scope.row.interaction_num : scope.row.trans_num }}
             </div>
           </template>
         </el-table-column>
       </el-table>
     </div>
-
-    <div v-else style="width:100%">
-      <el-table
-        :data="chartData.arr"
-        style="width: 100%"
-      >
-        <el-table-column
-          type="index"
-          label="排名"
-          width="150"
-        >
-          <template slot-scope="scope">
-            <div>{{ scope.$index + 6 }}</div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="title"
-          label="发文标题"
-        />
-
-        <el-table-column
-          prop="date"
-          label="发文时间"
-        />
-        <el-table-column
-          prop="hot"
-          label="热度值"
-        />
-      </el-table>
-    </div>
-
   </div>
 </template>
 
@@ -120,15 +90,54 @@ export default {
         datetime: ''
       }
     }
+  },
+  computed: {
+    calcWidth() {
+      if (this.chartData.arr.length === 1) {
+        return { width: '100%', height: '100%' }
+      } else if (this.chartData.arr.length === 2) {
+        return { width: '50%', height: '100%', float: 'left' }
+      } else {
+        return { minWidth: parseInt(100 / this.chartData.length) + '%', maxWidth: '50%', height: '100%', float: 'left' }
+      }
+    }
+  },
+  methods: {
+    // 获取发文标题
+    getTitleName(row) {
+      return (row.video_name ? row.video_name : row.title ? row.title
+        : row.weibo_name ? row.weibo_name : row.wechat_name)
+    }
   }
 
 }
 </script>
 
 <style scoped lang="scss">
+/deep/ .el-table tr {
+  height: 38px;
+}
+/deep/ .el-table th {
+  padding: 0;
+}
+/deep/ .hotText:first-child .el-table {
+}
+.hotText {
+  p {
+    height: 32px;
+    line-height: 32px;
+    padding-left: 10px;
+    background: #F8F9FB;
+    margin: 0 0 16px 16px;
+  }
+}
 .totaltable {
-  width: calc(100% - 32px);
-  margin: 13px 16px;
+  background: #ffffff;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  //padding: 13px 6px;
+  overflow-y: auto;
 }
 .totaltable .totaltable_left_button {
   display: flex;
@@ -152,33 +161,19 @@ export default {
 .table_right {
   margin-right: 0;
 }
-/deep/ .el-table tr {
-  height: 38px;
-}
-/deep/ .el-table th {
-  padding: 0;
-}
 .middle {
   text-align: center;
 }
-.middle {
+.titleone, .middle {
   color: #D50E0B;
   width: 26px;
   height: 26px;
-}
-.titleone {
-  color: #D50E0B;
 }
 .titletwo {
   color: #FF8D00;
 }
 .titlethere {
   color: #00A98B;
-}
-.titleone, .middle, .titletwo, .titlethere,.title-four {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap
 }
 .indexone {
   text-align: center;

@@ -241,3 +241,70 @@ div:focus {
 .button{
   text-align: right;
 }
+
+//热门top10
+/deep/ .el-tabs__content {
+  height: 647px;
+  overflow-y: auto;
+}
+
+.notCount {
+  text-align: center;
+  color: #A0A2B2;
+  position: relative;
+  .nodata {
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  img {
+    width: 206px;
+    height: 112px;
+  }
+  p {
+    margin-top: -10px;
+  }
+}
+.titleone, .middle {
+  color: #D50E0B;
+  width: 26px;
+  height: 26px;
+}
+.titletwo {
+  color: #FF8D00;
+}
+.titlethere {
+  color: #00A98B;
+}
+.indexone {
+  text-align: center;
+  color: #fff;
+  background: url(../assets/images/hotbig1.png) no-repeat;
+  background-size: 100%;
+  width: 26px;
+  height: 26px;
+  background-position: 0px -4px;
+  font-size: 12px;
+}
+.indextwo {
+  text-align: center;
+  color: #fff;
+  background: url(../assets/images/hotbig2.png) no-repeat center;
+  background-size: 100%;
+  background-position: 0px -4px;
+  width: 26px;
+  height: 26px;
+  font-size: 12px;
+}
+.indexthere {
+  text-align: center;
+  color: #fff;
+  background: url(../assets/images/hotbig3.png) no-repeat center;
+  background-size: 100%;
+  background-position: 0px -4px;
+  width: 26px;
+  height: 26px;
+  font-size: 12px;
+}

@@ -12,12 +12,21 @@ export default {
       }
     }
   },
+  watch: {
+    chartData: {
+      handler: function() {
+        this.$nextTick(() => {
+          this.initChart()
+        })
+      },
+      deep: true
+    }
+  },
   mounted() {
     this.initChart()
   },
   methods: {
     initChart() {
-      var contrastColor = '#fff'
       const that = this
       const myChartContainer = this.$refs.statusPapers
       const myChartChina = this.$echarts.init(myChartContainer)
@@ -43,7 +52,7 @@ export default {
           backgroundColor: '#fff',
           textStyle: {
             color: '#000',
-            fontSize: 12,
+            fontSize: 12
           }
         },
         series: [{

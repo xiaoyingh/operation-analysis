@@ -22,30 +22,41 @@
       :min-h="2"
       drag-ignore-from=".right-tit,.chart-slot"
       @resized="resizedEvent"
+      @moved="movedEvent"
     >
       <div class="item-content">
         <div class="titleBox">
           <div class="topTitle">
             <span class="left border_left">{{ item.leftHint.name }}</span>
             <div class="right-tit">
-              <span v-if="item.rightHint.name" class="fansNum">
-                {{ item.rightHint.name }}:{{ item.rightHint.count }}
+              <span v-if="dropConf[item.id].rightHint.name" class="fansNum">
+                {{ dropConf[item.id].rightHint.name }}:{{ dropConf[item.id].rightHint.count }}
               </span>
-              <span v-if="item.rightHint.more" class="right-more">更多</span>
-              <!-- <span v-if="item.rightHint.haveLoad" class="el-download">-->
-              <!-- <img src="../../assets/upload.png" alt="">-->
-              <!-- </span>-->
+              <span v-if="dropConf[item.id].rightHint.more" class="right-more" @click="loadmoreDrag(dropConf,dropConf[item.id])">更多</span>
             </div>
           </div>
           <div v-if="loaded" class="chart-slot">
-            <component
-              :is="item.chart"
-              ref="child"
-              :chart-data="item.data"
-            />
+            <!--      接口里将loading值改为false，并判断是否有数据      -->
+            <div v-if="dropConf[item.id].loading" class="loading-style">
+              <i class="el-icon-loading" />
+            </div>
+            <div v-else>
+              <div v-if="dropConf[item.id].noData" class="notcount">
+                <div class="nodata">
+                  <img src="@/assets/images/nodata.png" alt="">
+                  <p>暂无统计数据</p>
+                </div>
+              </div>
+              <div v-else>
+                <component
+                  :is="item.chart"
+                  :ref="item.i"
+                  :chart-data="dropConf[item.id].data"
+                />
+              </div>
+            </div>
           </div>
         </div>
-
       </div>
     </grid-item>
   </grid-layout>
@@ -72,6 +83,14 @@ export default {
         tableHeard: [],
         tableData: []
       })
+    },
+    dropConf: {
+      type: Object,
+      default: () => ({})
+    },
+    isVip: {
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -86,11 +105,18 @@ export default {
     this.loaded = true
   },
   methods: {
-    resizedEvent: function(i) {
+    resizedEvent(i) {
       // 在元素拖拽完成后重绘图表(如果不是图表则没有初始化方法就不用调取)
       this.$nextTick(() => {
-        this.$refs.child[i * 1].initChart && this.$refs.child[i * 1].initChart()
+        this.$refs[i][0].initChart()
       })
+      // 触发layout变化后的自定义事件
+      this.$emit('change-layout', this.layout, this.isVip)
+    },
+    // 移动grid后的hook
+    movedEvent() {
+      // 触发layout变化后的自定义事件
+      this.$emit('change-layout', this.layout, this.isVip)
     },
     // 动态加载所需组件
     loadComponents() {
@@ -106,6 +132,11 @@ export default {
           }
         }
       })
+    },
+
+    // 更多的弹框
+    loadmoreDrag(dropConf, ids) {
+      this.$emit('click-moredropConf', ids)
     }
   }
 }
@@ -142,7 +173,7 @@ export default {
       font-size: 14px;
       @include color('tab-item-color');
       flex: 1;
-      &:before{
+      &:before {
         content: '';
         display: inline-block;
         width: 4px;
@@ -152,7 +183,7 @@ export default {
         margin-right: 5px;
       }
     }
-    .right-tit{
+    .right-tit {
       user-select: none;
     }
     .fansNum {
@@ -162,7 +193,7 @@ export default {
       color: $functionButtonColor;
       height: 24px;
       line-height: 24px;
-      margin:0;
+      margin: 0;
       padding-left: 8px;
       padding-right: 8px;
     }
@@ -170,7 +201,7 @@ export default {
       color: $functionButtonColor;
       margin-left: 8px;
       cursor: pointer;
-			font-size: 14px;
+      font-size: 14px;
     }
     .el-download {
       margin-right: 16px;
@@ -178,8 +209,8 @@ export default {
       cursor: pointer;
       position: relative;
       img: {
-            position: absolute;
-            top: 2px;
+        position: absolute;
+        top: 2px;
       };
     }
   }
@@ -187,14 +218,43 @@ export default {
     width: 100%;
     height: calc(100% - 40px);
     padding: 0;
+    div {
+      height: 100%;
+    }
   }
-
 }
-.vue-grid-layout{
+.vue-grid-layout {
   max-width: 100%;
 }
-
-/deep/.vue-grid-placeholder {
+/deep/ .vue-grid-placeholder {
   background: $functionButtonColor;
+}
+.loading-style {
+  text-align: center;
+  color: #ccc;
+  .el-icon-loading {
+    position: relative;
+    top: calc(50% - 40px);
+    font-size: 40px;
+  }
+}
+.notcount {
+  text-align: center;
+  color: #A0A2B2;
+  position: relative;
+  .nodata {
+    height: 136px !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  img {
+    width: 206px;
+    height: 112px;
+  }
+  p {
+    margin-top: -10px;
+  }
 }
 </style>

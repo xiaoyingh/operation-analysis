@@ -16,8 +16,10 @@ const getters = {
   tenantId: state => state.user.tenantId,
 
   // accountAnalysis
-  buttontime: state => state.accountAnalysis.buttontime,
-  timetype: state => state.accountAnalysis.timetype,
-  sliderShow: state => state.accountAnalysis.sliderShow
+  startTime: state => state.accountAnalysis.startTime,
+  endTime: state => state.accountAnalysis.endTime,
+  timeType: state => state.accountAnalysis.timeType,
+  sliderShow: state => state.accountAnalysis.sliderShow,
+  buttonTimeEnd: state => state.accountAnalysis.buttonTimeEnd
 }
 export default getters

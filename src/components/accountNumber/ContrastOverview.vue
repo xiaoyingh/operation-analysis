@@ -37,17 +37,21 @@
       <!--   账号选择   -->
       <el-checkbox-group v-model="selectArr" @change="handleCardList">
         <el-card v-for="(item,index) in cardLists" :key="index" class="dialogBox" shadow="hover">
-          <div v-if="selectArr.length === 0" :mediaName="item.mediaName" class="cardTitle">{{ item.mediaName }}</div>
-          <el-checkbox v-else :label="item.accountId" :media-name="item.mediaName">{{ item.mediaName }}</el-checkbox>
+          <el-checkbox :label="item.accountId" :media-name="item.mediaName">{{ item.mediaName }}</el-checkbox>
         </el-card>
-
       </el-checkbox-group>
     </div>
   </div>
 </template>
 <script>
-import { selectManagementAnalysis } from '@/api/comparativeAnalysis'
+import { selectManagementAnalysis, getOrganizeName } from '@/api/comparativeAnalysis'
 export default {
+  props: {
+    activeData: {
+      type: Array,
+      default: () => []
+    }
+  },
   data() {
     return {
       formInline: {
@@ -56,58 +60,18 @@ export default {
         type: ''
       },
       numData: [{ value: '', text: '全部' }, { value: '1', text: '自有账号' }, { value: '2', text: '其他账号' }],
-      organ: [{ value: '', text: '全部' }, { value: '1', text: '机构A' }, { value: '2', text: '机构B' }],
-      cardLists: [
-        {
-          type: '微信',
-          data: [{ title: '人民日报', id: '2021012801' }, { title: '人民网', id: '2021012802' }, {
-            title: '环球时报',
-            id: '2021012803'
-          }, { title: '新华网', id: '2021012804' }, { title: '新华视点', id: '2021012805' }]
-        },
-        {
-          type: '微博',
-          data:
-            [{ title: '环球网', id: '2021012810' }, { title: '人民日报', id: '2021012811' }, { title: '新华视点', id: '2021012812' }, { title: '央广网', id: '2021012813' }, { title: '央视新闻', id: '2021012814' }]
-        },
-        {
-          type: '短视频',
-          data: [{ title: '人民日报（抖音）', id: '2021012821' }, { title: '人民日报（快手）', id: '2021012822' }, { title: '新华社(抖音)', id: '2021012823' }, { title: '新华网(抖音)', id: '2021012824' }, { title: '新华社(快手)', id: '2021012825' }, { title: '新华网(快手)', id: '2021012826' }]
-        },
-        {
-          type: '传统媒体',
-          data:
-            [{ title: '新华网', id: '2021012830' }, { title: '央视网', id: '2021012831' }, { title: '中国新闻网', id: '2021012832' }, { title: '中国日报网', id: '2021012833' }, { title: '光明网', id: '2021012834' }]
-        }
-      ], // 下面所有数据
-      wecaht: [{ title: '人民日报', id: '2021012801' }, { title: '人民网', id: '2021012802' }, {
-        title: '环球时报',
-        id: '2021012803'
-      }, { title: '新华网', id: '2021012804' }, { title: '新华视点', id: '2021012805' }],
-      webo: [{ title: '环球网', id: '2021012810' }, { title: '人民日报', id: '2021012811' }, {
-        title: '新华视点',
-        id: '2021012812'
-      }, { title: '央广网', id: '2021012813' }, { title: '央视新闻', id: '2021012814' }],
-      duanshipin: [{ title: '人民日报（抖音）', id: '2021012821' }, { title: '人民日报（快手）', id: '2021012822' }, {
-        title: '新华社(抖音)',
-        id: '2021012823'
-      }, { title: '新华网(抖音)', id: '2021012824' }, { title: '新华社(快手)', id: '2021012825' }, {
-        title: '新华网(快手)',
-        id: '2021012826'
-      }],
-      chuanmei: [{ title: '新华网', id: '2021012830' }, { title: '央视网', id: '2021012831' }, {
-        title: '中国新闻网',
-        id: '2021012832'
-      }, { title: '中国日报网', id: '2021012833' }, { title: '光明网', id: '2021012834' }],
+      organ: [],
+      cardLists: [],
       selectedNum: [], // 已选则的账号-顶部
       allNum: [], // 所有账号数组
-      selectArr: ['70', '73'], // 下面数组-选则的账号(回显)
+      selectArr: [], // 下面数组-选则的账号(回显)
       isToggle: true, // 是否展开: false 关闭，true 展开
       checkAll: false // 全选
 
     }
   },
   mounted() {
+    this.selectedNum = this.activeData // 把父组件的数组带过来
     for (let i = 0; i < this.cardLists.length; i++) {
       this.allNum.push(this.cardLists[i])
     }
@@ -119,12 +83,33 @@ export default {
     } else {
       // 账号回显
       for (let i = 0; i < this.selectedNum.length; i++) {
-        this.selectArr.push(this.selectedNum[i].accountId)
+        this.selectArr.push(this.selectedNum[i])
       }
     }
     this.getCurrentData()
+    this.getMyjigou()
   },
   methods: {
+    // 获取所属机构
+    getMyjigou() {
+      const obj = {
+        tenantId: 5
+      }
+      getOrganizeName(obj).then(res => {
+        if (res && res.data) {
+          const arr = []
+          for (let i = 0; i < res.data.length; i++) {
+            const obj = {}
+            obj.lable = res.data[i]
+            obj.value = res.data[i]
+            arr.push(obj)
+          }
+          this.organ = arr
+        }
+      }).catch(res => {
+        console.log('失败')
+      })
+    },
     // 重置
     onResrt() {
       this.formInline.user = ''
@@ -145,31 +130,22 @@ export default {
     handleCardList(value) {
       this.selectArr = value
       const temSelObj = []
+      const newArr = []
       for (let i = 0; i < value.length; i++) {
+        // 处理数据
+        const newObj = {}
+        newObj.accountId = value[i]
+        newObj.channelType = localStorage.getItem('channelType')
+        newObj.moduleType = 2
+        newObj.tenantId = 5
+        newArr.push(newObj)
         this.allNum.filter(val => {
           if (val.accountId === value[i]) {
             temSelObj.push(val)
           }
         })
       }
-      const dataArr = {
-        accountId: this.selectArr,
-        channelType: localStorage.getItem('channelType'),
-        moduleType: 2,
-        tenantId: 5
-      }
-      this.$emit('parentFun', dataArr)
-      this.selectedNum = temSelObj
-      if (this.selectedNum.length > 9) {
-        this.isToggle = true
-      } else {
-        this.isToggle = false
-      }
-      if (this.selectedNum.length === this.allNum.length) {
-        this.checkAll = true
-      } else {
-        this.checkAll = false
-      }
+      this.$emit('parentFun', newArr)
     },
     // 删除账号
     delects(index) {
@@ -209,24 +185,24 @@ export default {
       console.log(this.$route.path, 'this.$route.path')
       switch (this.$route.path) {
         case '/comparativeAnalysis/wechatComparison':
-          this.cardLists[0].data = this.wecaht
-          // this.selectManagementAnalysis(4)
-          // localStorage.setItem('channelType', '4')
+          // this.cardLists[0].data = this.wecaht
+          this.selectManagementAnalysis(4)
+          localStorage.setItem('channelType', 4)
           break
         case '/comparativeAnalysis/microblogComparison':
-          this.cardLists[0].data = this.webo
-          // this.selectManagementAnalysis(5)
-          // localStorage.setItem('channelType', '5')
+          // this.cardLists[0].data = this.webo
+          this.selectManagementAnalysis(5)
+          localStorage.setItem('channelType', 5)
           break
         case '/comparativeAnalysis/shortVideoComparison':
-          this.cardLists[0].data = this.duanshipin
-          // this.selectManagementAnalysis('7,8')
-          // localStorage.setItem('channelType', '7,8')
+          // this.cardLists[0].data = this.duanshipin
+          this.selectManagementAnalysis(7)
+          localStorage.setItem('channelType', 7)
           break
         case '/comparativeAnalysis/traditionalMediaComparison':
-          this.cardLists[0].data = this.chuanmei
-          // this.selectManagementAnalysis('1,2')
-          // localStorage.setItem('channelType', '1,2')
+          // this.cardLists[0].data = this.chuanmei
+          this.selectManagementAnalysis(1)
+          localStorage.setItem('channelType', 1)
           break
       }
     },
