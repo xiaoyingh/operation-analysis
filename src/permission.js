@@ -26,8 +26,10 @@ router.beforeEach(async(to, from, next) => {
       next({ path: '/' })
       NProgress.done()
     } else {
-      const hasGetUserInfo = store.getters.name
+      console.log(store.getters)
+      const hasGetUserInfo = store.getters.userName
       if (hasGetUserInfo) {
+        console.log('hasGetUserInfo')
         next()
       } else {
         try {
@@ -49,8 +51,8 @@ router.beforeEach(async(to, from, next) => {
     if (userData === '') {
       await store.dispatch('user/getInfo')
       userData = store.getters.userData
-      // const permList = userData.permList
-      const permList = asyncRoutes
+      const permList = userData.permList
+      // const permList = asyncRoutes
       const accessRoutes = await store.dispatch('permission/generateRoutes', permList)
       router.addRoutes(accessRoutes)
       next({ ...to, replace: true })

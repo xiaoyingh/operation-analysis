@@ -1,5 +1,7 @@
 @import './common/colors.scss';
 @import './common/fonts.scss';
+@import './common/bordermargin.scss';
+
 //定义全局主题&颜色的map数组，鉴于V5只有白天和晚上的主题，此处仅定义这两种
 //切记 所有颜色一式两份儿，务必保证key值统一，key值可以自定义，注意避免$%_之类的，
 //与sass自有符号冲突，见文知意即可
@@ -188,6 +190,13 @@ $themes: (
         radio-pane-border: #dcdfe6,
         radio-pane-active-border:  $functionButtonColor,
         radio-pane-active-color: $lightText1,
+
+        // 侧边栏背景颜色
+        left-sidebar: #F5F5F5,
+        hover-sidebar: rgba(52, 113, 255, 0.1),
+        color-sidebar: #000,
+        hover-color-sidebar: #3471ff,
+        input-color-sidebar: #E8ECF0,
     ),
 
     dark: (
@@ -370,6 +379,13 @@ $themes: (
          radio-pane-border: #414450,
          radio-pane-active-border:  $functionButtonColor,
          radio-pane-active-color: $lightText1,
+
+        // 侧边栏背景颜色
+        left-sidebar: #393C48,
+        hover-sidebar: #242733,
+        color-sidebar: #fff,
+        hover-color-sidebar: #3471ff,
+        input-color-sidebar: #E8ECF0,
     )
 );
 

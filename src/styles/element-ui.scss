@@ -37,6 +37,27 @@ $desaturate : 6%;
   @include border-color('input-border');
   @include color('input-color')
 }
+.el-input__inner:hover{
+  border-color: #3471ff;
+  /*<!--@include border-color(hover-color-sidebar);-->*/
+}
+.el-input:hover .el-input__icon{
+  color: #3471ff;
+}
+.el-dialog .el-dialog__header{
+	padding: 16px 24px 15px 24px!important;
+}
+.el-pagination{
+	float: right;
+	width: 100%;
+	padding: 18px 14px;
+	text-align: right;
+	background: #ffffff;
+	border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+.el-dialog .el-dialog__header .el-dialog__headerbtn .el-icon-close{
+	font-size: 14px !important;
+}
 
 // el-button
 .el-button.el-button--default {
@@ -167,10 +188,6 @@ $desaturate : 6%;
           font-size: $font24px;
       }
     } 
-  }
-  
-  .el-dialog__body {
-    padding: 45px 87px;
   }
   .el-dialog__footer{
     border-top: 1px solid #ccc;
@@ -552,5 +569,12 @@ $desaturate : 6%;
 // 多选
 .el-checkbox__label {
   font-weight: 400;
+}
+
+
+.el-table .cell{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 // element-ui ********************结束*********************

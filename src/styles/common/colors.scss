@@ -12,7 +12,7 @@
     $eliteBlue: #3471FF; //精锐蓝
     $simplePurple: #6c67e8; //简约紫
     $ecologicalGreen: #28cdb4; //生态绿
-    $auxiliarColor1: #fd794a; //辅助色1 
+    $auxiliarColor1: #fd794a; //辅助色1
     $auxiliarColor2: #1ab2f0; //辅助色2
     $auxiliarColor3: #24dcff; //辅助色3
 
@@ -31,6 +31,7 @@
 
     // Function button color 功能按钮色
     $functionButtonColor: #3471FF;  //功能按钮色
+    $tableStripe:#f8f9fb; // 表格斑马线颜色
 
 /* 常规模式-字体色----------------------------------- */
 
@@ -63,7 +64,7 @@
     $darkText1: #5f6166; //用于禁止不可操作或提示性文字薪资
     $darkText2: #8f9299; //用于常规显示及输入文字颜色
     $darkText3: #ffffff; //用于常规显示及输入文字颜色
-  
+
     // Border color 边框颜色
     $darkBorder: #A0A2B2; //用于按钮边框颜色
     $darkBorder1: #414450; //用于一级标题线框
@@ -82,3 +83,7 @@
 
     $scrollbarPiece: #d3dce6; //滚动条轨迹
     $scrollbarThumb:#99a9bf; //滚动条方块
+
+  /* 头部用户信息背景色----------------------------------- */
+    $userbackground: #fff; //头部用户信息背景色
+    $usercolor: #fff; //头部用户字体颜色

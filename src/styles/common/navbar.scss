@@ -34,12 +34,14 @@ $mainContainer: calc(100vh - 65px);
 }
 
 .app-main {
-  /*65 = navbar  */
   min-width: 1200px;
-  overflow: auto;
-  min-height: $mainContainer;
-  padding: 24px;
+  height: 100%;
+  padding: 16px 0 8px 0;
   @include background-color("app-main-bg");
   width: 100%;
   position: relative;
 }
+.app-main>div{
+  height: 100%;
+}
+

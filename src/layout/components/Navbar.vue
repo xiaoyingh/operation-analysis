@@ -13,7 +13,13 @@
         @mouseleave="hover =false"
         @click="openDrawer"
       />
-      <span>模板名称</span>
+      <span class="userimg">
+        <img src="../../assets/images/user.png" alt="">
+      </span>
+
+      <span class="users">
+        {{ userName }}
+      </span>
     </div>
     <!-- 设置弹窗 -->
     <settingDrawer ref="settingDrawer" />
@@ -32,7 +38,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userData', 'theme', 'predefineColors']),
+    ...mapGetters(['userData', 'userName', 'theme', 'predefineColors']),
     navBarColor: {
       get() {
         return this.$store.getters.navBarColor
@@ -48,3 +54,17 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.userimg {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  background: $userbackground;
+  border-radius: 50%;
+  margin-right: 14px;
+}
+.users {
+  color: $usercolor;
+}
+</style>

@@ -22,7 +22,7 @@ Vue.use(VueBus)
 // 引入echarts
 import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
-
+import 'echarts-liquidfill'
 // 引入全局css变量
 import themes_style from '@/styles/themes.scss'
 Vue.prototype.$themes_style = themes_style

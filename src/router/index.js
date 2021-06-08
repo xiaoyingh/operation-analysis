@@ -57,28 +57,92 @@ export const asyncRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/overView',
-    name: 'overView',
-    children: [{
-      path: 'overView',
-      name: 'overView-index',
-      component: 'overView/index',
-      meta: { title: '分析总览', icon: 'iconICON_rediansulan' }
-    }]
-  },
-  {
-    path: '/accountAnalysis',
-    component: Layout,
-    redirect: '/accountAnalysis/analysisIndex',
-    name: 'accountAnalysis',
+    redirect: '/analysisIndex',
+    meta: {
+      title: '账号分析',
+      icon: 'iconICON_rediansulan'
+    },
     children: [
       {
+        path: 'examples',
+        component: () => import('@/views/accountAnalysis/examples'), // Parent router-view
+        name: 'examples',
+        meta: {
+          title: '示例'
+        }
+      }, {
         path: 'analysisIndex',
         component: () => import('@/views/accountAnalysis/index'), // Parent router-view
         name: 'analysisIndex',
         meta: {
-          title: '账号分析',
-          icon: 'iconICON_rediansulan'
+          title: '账号总览'
+        }
+      }, {
+        path: 'wechatAnalysis',
+        component: () => import('@/views/accountAnalysis/wechatAnalysis'), // Parent router-view
+        name: 'wechatAnalysis',
+        meta: {
+          title: '微信分析'
+        }
+      }, {
+        path: 'microblogAnalysis',
+        component: () => import('@/views/accountAnalysis/microblogAnalysis'), // Parent router-view
+        name: 'microblogAnalysis',
+        meta: {
+          title: '微博分析'
+        }
+      }, {
+        path: 'shortVideoAnalysis',
+        component: () => import('@/views/accountAnalysis/shortVideoAnalysis'), // Parent router-view
+        name: 'shortVideoAnalysis',
+        meta: {
+          title: '短视频分析'
+        }
+      }, {
+        path: 'traditionalMediaAnalysis',
+        component: () => import('@/views/accountAnalysis/traditionalMediaAnalysis'), // Parent router-view
+        name: 'traditionalMediaAnalysis',
+        meta: {
+          title: '传统媒体分析'
+        }
+      }
+    ]
+  },
+  {
+    path: '/comparativeAnalysis',
+    component: Layout,
+    meta: {
+      title: '对比分析',
+      icon: 'iconICON_rediansulan'
+    },
+    children: [
+      {
+        path: 'wechatComparison',
+        component: () => import('@/views/comparativeAnalysis/wechatComparison'), // Parent router-view
+        name: 'wechatComparison',
+        meta: {
+          title: '微信对比'
+        }
+      }, {
+        path: 'microblogComparison',
+        component: () => import('@/views/comparativeAnalysis/microblogComparison'), // Parent router-view
+        name: 'microblogComparison',
+        meta: {
+          title: '微博对比'
+        }
+      }, {
+        path: 'shortVideoComparison',
+        component: () => import('@/views/comparativeAnalysis/shortVideoComparison'), // Parent router-view
+        name: 'shortVideoComparison',
+        meta: {
+          title: '短视频对比'
+        }
+      }, {
+        path: 'traditionalMediaComparison',
+        component: () => import('@/views/comparativeAnalysis/traditionalMediaComparison'), // Parent router-view
+        name: 'traditionalMediaComparison',
+        meta: {
+          title: '传统媒体对比'
         }
       }
     ]
@@ -86,16 +150,17 @@ export const asyncRoutes = [
   {
     path: '/accountManagement',
     component: Layout,
-    redirect: '/accountManagement/manageIndex',
-    name: 'accountManagement',
+    meta: {
+      title: '系统设置',
+      icon: 'iconICON_rediansulan'
+    },
     children: [
       {
         path: 'manageIndex',
         component: () => import('@/views/accountManagement/index'), // Parent router-view
         name: 'manageIndex',
         meta: {
-          title: '账号管理',
-          icon: 'iconICON_rediansulan'
+          title: '账号管理'
         }
       }
     ]

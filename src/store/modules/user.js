@@ -1,13 +1,16 @@
-import { login, logout } from '@/api/user'
+import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
 const getDefaultState = () => {
   return {
     token: getToken(),
-    userData: '',
     name: '',
-    avatar: ''
+    avatar: '',
+    userData: '', // 用户信息
+    userName: 'JSSONG', // 用户名称
+    userId: '', // 用户Id
+    tenantId: '' // 租户Id
   }
 }
 
@@ -28,6 +31,21 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_USER_DATA: (state, data) => {
+    state.userData = data
+    state.userName = data.userName
+    state.userId = data.userId
+    state.tenantId = data.tenantId
+  },
+  SET_USER_NAME: (state, name) => {
+    state.userName = name
+  },
+  SET_USER_ID: (state, token) => {
+    state.userId = token
+  },
+  SET_TENANT_ID: (state, id) => {
+    state.tenantId = id
   }
 }
 
@@ -51,23 +69,23 @@ const actions = {
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       // 不接sso
-      const data = {
-        useId: 555
-      }
-      commit('SET_USER', data)
-      resolve(data)
+      // const data = {
+      //   useId: 555
+      // }
+      // commit('SET_USER', data)
+      // resolve(data)
       // 接sso
-      // getInfo().then(response => {
-      //   const { data } = response
-      //   if (!data) {
-      //     reject(response)
-      //   }else{
-      //     commit('SET_USER', data[0])
-      //     resolve(data)
-      //   }
-      // }).catch(error => {
-      //   reject(error)
-      // })
+      getInfo().then(response => {
+        const { data } = response
+        if (!data) {
+          reject(response)
+        } else {
+          commit('SET_USER_DATA', data[0])
+          resolve(data)
+        }
+      }).catch(error => {
+        reject(error)
+      })
     })
   },
 

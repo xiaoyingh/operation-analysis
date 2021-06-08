@@ -32,7 +32,7 @@ $navBarHeight: 65px;
     }
   }
   // hover
-  .el-menu--popup { 
+  .el-menu--popup {
     min-width: 132px!important;
     background-color:var(--navBarColor)!important;
     .el-submenu .el-menu-item {
@@ -48,32 +48,37 @@ $navBarHeight: 65px;
       align-items: center;
       justify-content: center;
       .submenu-title {
-        display: inline-block;
+        //display: inline-block;
         height: 36px;
         line-height: 36px;
         width: 120px;
         border-radius: 4px;
-        text-align: center;
+        text-align: left;
+        display: flex;
+        &:before{
+          content: '·';
+          font-size: 40px;
+        }
       }
       .is-active {
         .submenu-title {
           background-color: #e8ecf0 !important;
           color: var(--navBarColor)!important;
-        }  
+        }
       }
       &:hover {
         background-color: transparent;
         color: var(--navBarColor)!important;
         .submenu-title {
           background-color:#e8ecf0;
-        }  
+        }
       }
     }
   }
   // 侧边导航
   .sidebar-container {
     @include animateSiderBar(width);
-    @include background_color("siderbar-bg");   
+    @include background_color("siderbar-bg");
     height: 100%;
     position: fixed;
     font-size: 0px;
@@ -89,24 +94,24 @@ $navBarHeight: 65px;
       line-height: 60px;
       text-align: center;
       overflow: hidden;
-    
+
       & .sidebar-logo-link {
         height: 100%;
         width: 100%;
-    
+
         & .sidebar-logo {
           width: 36px;
           height: 36px;
           vertical-align: middle;
           margin-right: 20px;
         }
-    
+
         & .sidebar-title {
           width: 100px;
           vertical-align: middle;
         }
       }
-    
+
       &.collapse {
         .sidebar-logo {
           margin-right: 0px;
@@ -120,7 +125,7 @@ $navBarHeight: 65px;
       .el-menu-item  {
         height: 60px;
         line-height: 60px;
-        padding-left: 20px;    
+        padding-left: 20px;
         font-size: $font16px;
         @include color("siderbar-no-active");
         // menu hover
@@ -150,14 +155,14 @@ $navBarHeight: 65px;
       .el-submenu {
         background-color: transparent!important;
         .el-submenu__title {
-          font-size: $font16px;   
+          font-size: $font16px;
           &:hover {
             background-color: transparent;
             color: var(--navBarColor);
             .iconfont {
               color: var(--navBarColor);
             }
-          }  
+          }
         }
         .is-active,.el-menu {
           background-color: transparent;
@@ -166,18 +171,23 @@ $navBarHeight: 65px;
           .left-block {
             display: none;
           }
-        } 
+        }
       }
       .el-submenu {
         .nest-menu {
           height: 44px;
           .submenu-title {
-            display: inline-block;
+            //display: inline-block;
             height: 36px;
             line-height: 36px;
             width: 120px;
             border-radius: 4px;
-            text-align: center;
+            text-align: left;
+            display: flex;
+            &:before{
+              content: '·';
+              font-size: 40px;
+            }
           }
         }
         .el-menu-item {
@@ -188,26 +198,32 @@ $navBarHeight: 65px;
       .el-submenu.is-active {
         .el-submenu__title {
           @include background-color("siderbar-is-active-bg");
-          font-size: $font16px;     
+          font-size: $font16px;
         }
         .iconfont {
           color: var(--navBarColor);
-        }   
+        }
         .nest-menu {
           height: 44px;
           .submenu-title {
-            display: inline-block;
+            //display: inline-block;
             height: 36px;
             line-height: 36px;
             width: 120px;
             border-radius: 4px;
-            text-align: center;
+            text-align: left;
+            display: flex;
+            &:before{
+              content: '·';
+              font-size: 40px;
+            }
           }
         }
         .el-menu-item.is-active{
           .submenu-title {
-            background-color: var(--navBarColor);
-            @include color('siderbar-submenu-color');
+            //background-color: var(--navBarColor);
+            //@include color('siderbar-submenu-color');
+            color: var(--navBarColor);
           }
         }
       }
@@ -234,7 +250,7 @@ $navBarHeight: 65px;
     .el-scrollbar__bar.is-vertical {
       right: 0px;
     }
-    
+
     .el-scrollbar {
       height: calc(100% - 100px);
     }
@@ -254,7 +270,7 @@ $navBarHeight: 65px;
       border: none;
       height: 100%;
       width: 100% !important;
-    }  
+    }
   }
   // 展开
   .openSidebar {
@@ -264,6 +280,7 @@ $navBarHeight: 65px;
     .app-container {
       @include animateSiderBar(margin-left);
       margin-left: $sideBarOpenWidth;
+      height: 100%;
       .fixed-header {
         width: $fixedOpenWidth;
       }
@@ -273,8 +290,8 @@ $navBarHeight: 65px;
         height: 100%;
         position: relative;
       }
-    } 
-  } 
+    }
+  }
   // 收起
   .hideSidebar {
     .sidebar-container {
@@ -283,11 +300,13 @@ $navBarHeight: 65px;
     .app-container {
       margin-left: $sideBarCloseWidth;
       @include animateSiderBar(margin-left);
+      height: 100%;
       .fixed-header {
         width: $fixedCloseWidth!important;
       }
       .main-container {
         padding-top: $navBarHeight;
+        height: 100%;
       }
     }
     // el-tooltip

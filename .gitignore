@@ -1,6 +1,8 @@
 .DS_Store
 node_modules/
 dist/
+test/
+prod/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -14,3 +16,4 @@ tests/**/coverage/
 *.ntvs*
 *.njsproj
 *.sln
+*.zip
