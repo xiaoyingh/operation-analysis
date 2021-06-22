@@ -9,7 +9,7 @@
           <div class="item-content">
             <div class="titleBox">
               <div class="topTitle">
-                <span class="left border_left">情感分析 </span>
+                <span class="left border_left">产品分析 </span>
                 <div class="right-tit">
                   <!-- <span class="fansNum">123</span> -->
                   <!-- <span class="right-more" @click="loadmoreDrag()">更多</span> -->
@@ -28,8 +28,7 @@
                     </div>
                   </div>
                   <div v-else>
-                    <!-- <nightingale :chartData="chartDataPie" /> -->
-                    <rosePie :chartData="chartDataPie" @handlePieClick="handlePieClick" />
+                    <statusofpapers :chartData="chartDataPie" :radius="radius" @handlePieClick="handlePieClick" />
                   </div>
                 </div>
               </div>
@@ -37,35 +36,6 @@
           </div>
         </el-col>
         <el-col :span="12" style="padding-left: 10px;margin-bottom: 20px;">
-          <div class="item-content">
-            <div class="titleBox">
-              <div class="topTitle">
-                <span class="left border_left">地域分布</span>
-                <div class="right-tit">
-                  <!-- <span class="fansNum">123</span> -->
-                  <!-- <span class="right-more" @click="loadmoreDrag()">更多</span> -->
-                </div>
-              </div>
-              <div class="chart-slot">
-                <div v-if="loadingMap" class="loading-style">
-                  <i class="el-icon-loading" />
-                </div>
-                <div v-else>
-                  <div v-if="noDataMap" class="notcount">
-                    <div class="nodata">
-                      <img src="@/assets/images/nodata.png" alt="">
-                      <p>暂无统计数据</p>
-                    </div>
-                  </div>
-                  <div v-else>
-                    <GeoMap :chartData="chartDataMap" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :span="12" style="padding-right: 10px;margin-bottom: 20px;">
           <div class="item-content">
             <div class="titleBox">
               <div class="topTitle">
@@ -88,35 +58,6 @@
                   </div>
                   <div v-else>
                     <hotModel :chartData="chartDataWords" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :span="12" style="padding-left: 10px;margin-bottom: 20px;">
-          <div class="item-content">
-            <div class="titleBox">
-              <div class="topTitle">
-                <span class="left border_left">渠道分析</span>
-                <div class="right-tit">
-                  <!-- <span class="fansNum">123</span> -->
-                  <!-- <span class="right-more" @click="loadmoreDrag()">更多</span> -->
-                </div>
-              </div>
-              <div class="chart-slot">
-                <div v-if="loadingLine" class="loading-style">
-                  <i class="el-icon-loading" />
-                </div>
-                <div v-else>
-                  <div v-if="noDataLine" class="notcount">
-                    <div class="nodata">
-                      <img src="@/assets/images/nodata.png" alt="">
-                      <p>暂无统计数据</p>
-                    </div>
-                  </div>
-                  <div v-else>
-                    <Papers :chartData="chartDataLine" />
                   </div>
                 </div>
               </div>
@@ -146,6 +87,64 @@
                   </div>
                   <div v-else>
                     <Reading :chartData="chartDataZt" @handleProductClick="handleProductClick" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </el-col>
+        <el-col :span="12" style="padding-left: 10px;margin-bottom: 20px;">
+          <div class="item-content">
+            <div class="titleBox">
+              <div class="topTitle">
+                <span class="left border_left">体验分析</span>
+                <div class="right-tit">
+                  <!-- <span class="fansNum">123</span> -->
+                  <!-- <span class="right-more" @click="loadmoreDrag()">更多</span> -->
+                </div>
+              </div>
+              <div class="chart-slot">
+                <div v-if="loadingWg" class="loading-style">
+                  <i class="el-icon-loading" />
+                </div>
+                <div v-else>
+                  <div v-if="noDataWg" class="notcount">
+                    <div class="nodata">
+                      <img src="@/assets/images/nodata.png" alt="">
+                      <p>暂无统计数据</p>
+                    </div>
+                  </div>
+                  <div v-else>
+                    <InteracTion :chartData="chartDataWg" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </el-col>
+        <el-col :span="12" style="padding-right: 10px;margin-bottom: 20px;">
+          <div class="item-content">
+            <div class="titleBox">
+              <div class="topTitle">
+                <span class="left border_left">渠道分析</span>
+                <div class="right-tit">
+                  <!-- <span class="fansNum">123</span> -->
+                  <!-- <span class="right-more" @click="loadmoreDrag()">更多</span> -->
+                </div>
+              </div>
+              <div class="chart-slot">
+                <div v-if="loadingLine" class="loading-style">
+                  <i class="el-icon-loading" />
+                </div>
+                <div v-else>
+                  <div v-if="noDataLine" class="notcount">
+                    <div class="nodata">
+                      <img src="@/assets/images/nodata.png" alt="">
+                      <p>暂无统计数据</p>
+                    </div>
+                  </div>
+                  <div v-else>
+                    <Papers :chartData="chartDataLine" />
                   </div>
                 </div>
               </div>
@@ -209,15 +208,6 @@
       width="1096px"
     >
       <hotdocumentable :chartData="chartDataTable" />
-      <el-pagination
-        class="paginationWrap"
-        background
-        layout="total, prev, pager, next"
-        @current-change="handleCurrentChange"
-        :current-page.sync="currentPage"
-        :page-size="pageSize"
-        :total="total">
-      </el-pagination>
       <div slot="footer" class="dialog-footer">
         <el-button @click="hiddendrag()">取 消</el-button>
         <el-button type="primary" @click="hiddendrag()">确 定</el-button>
@@ -229,23 +219,21 @@
 <script>
 import buttonGruop from '@/components/viewEcharts/buttongruop.vue' // 累计总量 时间
 import Papers from '@/components/viewEcharts/papers'
-import nightingale from '@/components/viewEcharts/nightingale'
-import rosePie from '@/components/viewEcharts/rosePie'
+import statusofpapers from '@/components/viewEcharts/statusofpapers'
+import InteracTion from '@/components/viewEcharts/Interaction'
 import hotModel from '@/components/viewEcharts/hotModel'
 import Reading from '@/components/viewEcharts/Reading'
-import GeoMap from '@/components/viewEcharts/geoMap'
 import hotdocumentable from '@/components/viewEcharts/hotdocumentable'
 import getTimeMixin from '@/utils/getTimeMixin'
 export default {
-  name: 'OverView',
+  name: 'productAnalysis',
   components: {
     buttonGruop,
     Papers,
-    nightingale,
-    rosePie,
+    statusofpapers,
+    InteracTion,
     hotModel,
     Reading,
-    GeoMap,
     hotdocumentable
   },
   mixins: [getTimeMixin],
@@ -257,6 +245,7 @@ export default {
       loadingPie: false,
       noDataPie: false,
       chartDataPie: [],
+      radius: ['50%', '80%'],
       loadingWords: false,
       noDataWords: false,
       chartDataWords: [],
@@ -264,36 +253,19 @@ export default {
       noDataZt: false,
       chartDataZt: {},
       dialogVisibleProduct: false,
+      loadingWg: false,
+      noDataWg: false,
+      chartDataWg: {
+        data: [],
+        dataX: []
+      },
       loadingTable: false,
       noDataTable: false,
-      chartDataTable: {
-        arr: [],
-        Sort: false
-      },
+      chartDataTable: {},
       currentPage: 1,
       pageSize: 5,
       total: 50,
       dialogVisiblemore: false,
-      loadingMap: false,
-      noDataMap: false,
-      chartDataMap: {
-        arr: [{
-            name: '湖北',
-            value: 1052
-          }, {
-            name: '湖南',
-            value: 1052
-          }, {
-            name: '浙江',
-            value: 104
-          }, {
-            name: '江西',
-            value: 36
-          }, {
-            name: '黑龙江',
-            value: 15
-          }]
-      },
       nowTime: '',
       timeType: '',
       startTime: '',
@@ -309,9 +281,9 @@ export default {
     commonChartData(){
       this.loadTraditionPie()
       this.loadTraditionZt(1)
+      this.loadTraditionWg(1)
       this.loadTraditionWords(1)
       this.loadTraditionLine(1)
-      this.loadTraditionMap(1)
       this.loadTraditionTable(1)
     },
     // 情感分析 饼图
@@ -320,16 +292,16 @@ export default {
       setTimeout(() => {
         this.loadingPie = false
         this.chartDataPie = [{
-            value: 59,
+            value: 42,
             name: '满意'
           }, {
-            value: 48,
+            value: 39,
             name: '一般'
           }, {
-            value: 37,
+            value: 28,
             name: '不满意'
           }, {
-            value: 26,
+            value: 24,
             name: '很不满意'
           }]
       }, 1000);
@@ -338,20 +310,20 @@ export default {
       console.log(param)
       if (param.name == '满意') {
         this.loadTraditionZt(1)
+        this.loadTraditionWg()
         this.loadTraditionLine(1)
-        this.loadTraditionMap(1)
         this.loadTraditionWords(1)
         this.loadTraditionTable(1)
       } else if (param.name == '一般') {
         this.loadTraditionZt(2)
+        this.loadTraditionWg()
         this.loadTraditionLine(2)
-        this.loadTraditionMap(2)
         this.loadTraditionWords(2)
         this.loadTraditionTable(2)
       } else {
         this.loadTraditionZt(3)
+        this.loadTraditionWg()
         this.loadTraditionLine(3)
-        this.loadTraditionMap(3)
         this.loadTraditionWords(3)
         this.loadTraditionTable(3)
       }
@@ -364,21 +336,20 @@ export default {
       this.loadingZt = true
       setTimeout(() => {
         this.loadingZt = false
-        // 制冷、洗涤、空调、热水器、厨电、彩电、净水、日日顺乐农、日日顺乐家、其他
         if (type == 1) { 
           this.chartDataZt = {
-            dataX: ['厨电', '制冷', '洗涤', '空调', '热水器', '彩电', '日日顺乐农', '其他'],
-            dataY: [40, 36, 30, 28, 25, 13, 12, 10]
+            dataX: ['厨电', '制冷', '洗涤', '空调', '热水器', '彩电', '其他'],
+            dataY: [42, 32, 22, 18, 15, 14, 12, 10]
           }
         } else if (type == 2){
           this.chartDataZt = {
             dataX: ['空调', '制冷', '洗涤', '厨电', '热水器', '彩电', '日日顺乐农', '其他'],
-            dataY: [38, 35, 30, 27, 15, 14, 12, 8]
+            dataY: [48, 35, 30, 27, 20, 14, 12, 10]
           }
         } else {
           this.chartDataZt = {
-            dataX: ['厨电', '热水器', '彩电', '空调', '制冷', '洗涤', '日日顺乐农', '其他'],
-            dataY: [42, 38, 35, 30, 25, 23, 12, 10]
+            dataX: ['厨电', '热水器', '彩电', '空调', '制冷', '洗涤', '其他'],
+            dataY: [40, 38, 28, 20, 15, 13, 12, 11]
           }
         }
       }, 1000);
@@ -387,6 +358,31 @@ export default {
       console.log(param)
       this.dialogVisibleProduct = true
     },
+    // 体验分析 柱状图
+    loadTraditionWg() {
+      this.loadingWg = true
+      setTimeout(() => {
+        this.loadingWg = false
+        // 设计、节能、操作、环保、智能、价格、安全、寿命
+        this.chartDataWg = {
+          data: [
+            {
+              stack: '体验',
+              data: [42, 40, 35, 24, 20, 18, 15, 10]
+            },
+            // {
+            //   stack: '产品B',
+            //   data: [18, 22, 18, 22, 22, 18, 20, 20, 18, 22, 20, 18]
+            // },
+            // {
+            //   stack: '产品C',
+            //   data: [18, 22, 18, 22, 22, 18, 20, 20, 18, 22, 20, 18]
+            // }
+          ],
+          dataX: ['设计', '节能', '操作', '环保', '智能', '价格', '安全', '寿命']
+        }
+      }, 1000);
+    },
     //热词
     loadTraditionWords(type) {
       this.loadingWords = true
@@ -394,166 +390,178 @@ export default {
         this.loadingWords = false
         if (type == 1) {
           this.chartDataWords = [{
-              name: '美观大方',
-              value: 179
-            }, {
-              name: '容量适宜',
-              value: 170
-            }, {
-              name: '外观漂亮',
-              value: 152
-            }, {
-              name: '声音很轻',
+              name: '容量空间大',
               value: 140
             }, {
-              name: '功能合理',
-              value: 100
-            }, {
-              name: '易于操控',
-              value: 87
-            }, {
-              name: '家用适合',
-              value: 57
-            }, {
-              name: '清洁能力强',
-              value: 37
-            }, {
-              name: '多人适用',
-              value: 20
-            }, {
-              name: '使用舒适',
-              value: 16
-            }, {
-              name: '夏季适用',
-              value: 14
-            }, {
-              name: '物理',
-              value: 25
-            }]
-        } else if (type == 2) {
-          this.chartDataWords = [{
-              name: '慎重',
-              value: 150
-            }, {
-              name: '算了',
+              name: '噪音低',
               value: 120
             }, {
-              name: '还好',
-              value: 100
-            }, {
-              name: '有待观察',
-              value: 85
-            }, {
-              name: '小亏',
-              value: 60
-            }, {
-              name: '感觉被骗',
-              value: 50
-            }, {
-              name: '慎重考虑',
-              value: 45
-            }, {
-              name: '慎重下单',
-              value: 41
-            }, {
-              name: '凑合',
-              value: 31
-            }, {
-              name: '心理不舒服',
-              value: 30
-            }, {
-              name: '心塞',
-              value: 21
-            }, {
-              name: '优先配送',
-              value: 21
-            }, {
-              name: '还可以',
-              value: 18
-            }, {
-              name: '不痛快',
-              value: 18
-            }, {
-              name: '凑合',
-              value: 15
-            }, {
-              name: '打脸',
-              value: 16
-            }, {
-              name: '醉了',
-              value: 10
-            }, {
-              name: '怀疑',
-              value: 8
-            }, {
-              name: '下单三思',
-              value: 5
-            }, {
-              name: '踏实',
-              value: 4
-            }]
-        } else {
-          this.chartDataWords = [{
-              name: '谨慎购买',
-              value: 180
-            }, {
-              name: '噱头',
-              value: 170
-            }, {
-              name: '差评',
-              value: 150
-            }, {
-              name: '不好看',
-              value: 140
-            }, {
-              name: '上当',
-              value: 120
-            }, {
-              name: '被坑',
+              name: '存储方便',
               value: 110
             }, {
-              name: '歪理',
+              name: '性价比高',
               value: 100
             }, {
-              name: '不退钱',
-              value: 81
+              name: '便宜',
+              value: 80
             }, {
-              name: '自认倒霉',
-              value: 71
+              name: '颜色百搭',
+              value: 70
             }, {
-              name: '骗人',
-              value: 71
+              name: '颜色好看',
+              value: 60
+            }, 
+            {
+              name: '操作简单',
+              value: 50
             }, {
-              name: '套路',
-              value: 61
+              name: '外观材质很好',
+              value: 40
             }, {
-              name: '质量太差',
-              value: 61
+              name: '大气又实用',
+              value: 30
             }, {
-              name: '没信用',
-              value: 51
+              name: '质感很高',
+              value: 10
+            }, 
+            // {
+            //   name: '物理',
+            //   value: 25
+            // }
+            ]
+        } else if (type == 2) {
+          this.chartDataWords = [{
+              name: '价廉物不美',
+              value: 120
             }, {
-              name: '流氓行为',
-              value: 41
+              name: '破损',
+              value: 100
             }, {
-              name: '恶心',
-              value: 31
+              name: '缝太大',
+              value: 90
             }, {
-              name: '无语',
-              value: 21
+              name: '不协调',
+              value: 80
             }, {
-              name: '压抑感',
+              name: '变形',
+              value: 70
+            }, {
+              name: '延长保修期',
+              value: 60
+            }, {
+              name: '机型质量一般',
+              value: 50
+            }, {
+              name: '冷冻速度还可以',
+              value: 40
+            }, {
+              name: '机器工艺一般',
+              value: 30
+            }, {
+              name: '整体还行',
+              value: 20
+            }, {
+              name: '没有儿童锁',
+              value: 10
+            }, 
+            // {
+            //   name: '优先配送',
+            //   value: 1
+            // }, {
+            //   name: '还可以',
+            //   value: 1
+            // }, {
+            //   name: '不痛快',
+            //   value: 1
+            // }, {
+            //   name: '凑合',
+            //   value: 1
+            // }, {
+            //   name: '打脸',
+            //   value: 1
+            // }, {
+            //   name: '醉了',
+            //   value: 1
+            // }, {
+            //   name: '怀疑',
+            //   value: 1
+            // }, {
+            //   name: '下单三思',
+            //   value: 1
+            // }, {
+            //   name: '踏实',
+            //   value: 1
+            // }
+            ]
+        } else {
+          this.chartDataWords = [{
+              name: '色差大',
+              value: 140
+            }, {
+              name: '质量堪忧',
+              value: 110
+            }, {
+              name: '品控差',
+              value: 100
+            }, {
+              name: '毁国产',
+              value: 90
+            }, {
+              name: '不密封',
+              value: 80
+            }, {
+              name: '污渍',
+              value: 70
+            }, {
+              name: '粗糙',
+              value: 60
+            }, {
+              name: '降价',
+              value: 50
+            }, {
+              name: '门扇不齐',
+              value: 40
+            }, {
+              name: '无环保标识',
+              value: 40
+            }, {
+              name: '显示屏破碎',
+              value: 30
+            }, {
+              name: '瑕疵家电',
+              value: 30
+            }, {
+              name: '不制冷',
+              value: 30
+            }, {
+              name: '价格相差大',
+              value: 20
+            }, {
+              name: '底板变形',
+              value: 20
+            }, {
+              name: '不牢',
+              value: 20
+            }, {
+              name: '角不平',
+              value: 20
+            }, {
+              name: '反复启动',
               value: 10
             }, {
-              name: '怀疑人生',
-              value: 8
+              name: '瑕疵品',
+              value: 10
             }, {
-              name: '很不爽',
-              value: 6
+              name: '质量堪忧',
+              value: 10
             }, {
-              name: '失望',
-              value: 2
-            }]
+              name: '没有美感',
+              value: 10
+            }, {
+              name: '塑料条开裂',
+              value: 10
+            }
+            ]
         }
       }, 1000);
     },
@@ -562,92 +570,27 @@ export default {
       this.loadingLine = true
       setTimeout(() => {
         this.loadingLine = false
-        //门户网站、论坛、微博、微信、问答社区、头条、抖音、快手、小红书、B站、电商、应用商店
+        // 门户网站、论坛、微博、微信、问答社区、头条、抖音、快手、小红书、B站、电商、应用商店
         if (type == 1) {
           this.chartDataLine = {
             name: '渠道来源',
             id: 'paperName',
-            dataX: ["抖音","淘宝","微博","微信"],
-            dataY: [42, 32, 23, 10]
+            dataX: ['微博', '微信', '头条', '抖音', '电商', '论坛'],
+            dataY: [40, 34, 16, 12, 6, 2]
           }
         } else if (type == 2){
           this.chartDataLine = {
             name: '渠道来源',
             id: 'paperName',
-            dataX: ["贴吧","微博","微信","其他"],
-            dataY: [44, 31, 20, 10]
+            dataX: ['微博', '微信', '头条', '抖音', '电商', '论坛'],
+            dataY: [45, 22, 14, 10, 6, 8]
           }
         } else {
           this.chartDataLine = {
             name: '渠道来源',
             id: 'paperName',
-            dataX: ["抖音","微博","微信","其他"],
-            dataY: [41, 35, 21, 12]
-          }
-        }
-      }, 1000);
-    },
-    // 地域分布 地图
-    loadTraditionMap(type) {
-      this.loadingMap = true
-      setTimeout(() => {
-        this.loadingMap = false
-        if (type == 1) {
-          this.chartDataMap = {
-            arr: [{
-              name: '湖北',
-              value: 52
-            }, {
-              name: '湖南',
-              value: 50
-            }, {
-              name: '浙江',
-              value: 40
-            }, {
-              name: '江西',
-              value: 36
-            }, {
-              name: '黑龙江',
-              value: 15
-            }]
-          }
-        } else if (type == 2){
-          this.chartDataMap = {
-            arr: [{
-              name: '湖北',
-              value: 62
-            }, {
-              name: '湖南',
-              value: 50
-            }, {
-              name: '浙江',
-              value: 40
-            }, {
-              name: '江西',
-              value: 36
-            }, {
-              name: '黑龙江',
-              value: 15
-            }]
-          }
-        } else {
-          this.chartDataMap = {
-            arr: [{
-              name: '湖北',
-              value: 52
-            }, {
-              name: '湖南',
-              value: 50
-            }, {
-              name: '浙江',
-              value: 40
-            }, {
-              name: '江西',
-              value: 36
-            }, {
-              name: '黑龙江',
-              value: 15
-            }]
+            dataX: ["微博",'威腾网','前端头条','贴吧'],
+            dataY: [45, 21, 21, 10]
           }
         }
       }, 1000);
@@ -660,90 +603,90 @@ export default {
         if (type == 1) {
           this.chartDataTable = {
             arr: [{
-              pubtime: '2021/6/6 12:40:59',
+              pubtime: '2021/6/5 23:39:15',
               trans_num: '32983',
-              title: '买洗衣机，就选海尔双动力，防缠绕。',
-              url: 'https://www.iesdouyin.com/share/video/6970536296536182052'
+              title: '​真的，卡萨帝油烟机吸力太强大了！！[太开心] ​​​​​',
+              url: 'http://weibo.com/6031139327/KiPmij3wW'
             }, {
-              pubtime: '2021/6/5 16:13:25',
+              pubtime: '2021/6/5 23:42:03',
               trans_num: '24216',
-              title: '海尔智慧冰箱智慧大脑',
-              url: 'https://www.iesdouyin.com/share/video/6970219961818123561'
+              title: '​​卡萨帝油烟机再战10年也没问题啊！[给你小心心]',
+              url: 'http://weibo.com/6041026476/KiPnqqsf1'
             }, {
-              pubtime: '2021/6/6 10:20:11',
+              pubtime: '2021/6/5 23:38:39',
               trans_num: '4378',
-              title: '豪车就选法拉利，高端空调就选卡萨帝',
-              url: 'https://share.huoshan.com/pages/item/index.html?item_id=6970500016666430756'
+              title: '​​卡萨帝抽油烟机确实很好用，看来抽烟机也不能少[可爱]',
+              url: 'http://weibo.com/6804380928/KiPm2FrKY'
             }, {
-              pubtime: '2021/6/4 13:57:29',
+              pubtime: '2021/6/8 15:49:13',
               trans_num: '1245',
-              title: '将世界美食带入中国家庭 ',
-              url: 'https://mp.weixin.qq.com/s?__biz=MzU2NDE1MTAxOQ==&mid=2247484313&idx=1&sn=d9c1e9c5d14542967aab3aa15be665a0'
+              title: '​​海尔热水器真的特别好用呀',
+              url: 'http://weibo.com/7584223756/Kjez03Myx'
             }, {
-              pubtime: '2021/6/5 16:46:40',
+              pubtime: '2021/6/8 16:21:36',
               trans_num: '788',
-              title: '烟机界刮起“智慧风”？新科技其实是卡萨帝的“旧谈资',
-              url: 'https://www.toutiao.com/a6970228535688823560'
+              title: '​​帅哥的第二颜值-卡萨帝双子洗衣机 ',
+              url: 'http://weibo.com/5038238510/KjeM8nZvN'
             }],
             Sort: true // 未超过5名 前三名有样式区分
           }
         } else if (type == 2){
           this.chartDataTable = {
             arr: [{
-              pubtime: '2021/6/5 23:37:45',
+              pubtime: '2021/6/9 20:06:43',
               trans_num: '32983',
-              title: '#热水器漏水 第四台海尔了  再换也内胆漏水 退款也不行',
-              url: 'https://share.huoshan.com/pages/item/index.html?item_id=6970334372264185125'
+              title: '​打算到时候入手一台海尔洗衣机跟空调',
+              url: 'http://weibo.com/6512563298/KjpG15ouu'
             }, {
-              pubtime: '2021/6/10 18:05:00',
+              pubtime: '2021/6/7 16:17:15',
               trans_num: '24216',
-              title: '海尔滚筒洗衣机怎么选时间,优缺点评测真实诉说！',
-              url: 'https://tieba.baidu.com/p/7397735056'
+              title: '​​海尔统帅考完可以在家吹空调了',
+              url: 'http://weibo.com/3674879191/Kj5jSdaBa'
             }, {
-              pubtime: '2021/6/10 16:40:00',
+              pubtime: '2021/6/8 12:28:02',
               trans_num: '4378',
-              title: '现在很多女性都是在家，浪费许多时间，传奇今生无疑是给女性创业带来一次热潮',
-              url: 'https://tieba.baidu.com/p/7303151379?pid=139759038360&cid=0#139759038360'
+              title: '咱家热水器安装完就是两条电线露在外面？',
+              url: 'http://weibo.com/1777701867/KjdfkvAvc'
             }, {
-              pubtime: '2021/6/10 14:27:00',
+              pubtime: '2021/6/10 08:50:38',
               trans_num: '1245',
-              title: '海尔冰箱八九了，最近下面响，打开下门就不响了，谁知道啥毛病修修多少钱 ',
-              url: 'https://tieba.baidu.com/p/7397404234'
+              title: '​卡萨帝燃电混动新物种银河CT7入户安装效果#海尔##卡萨帝热水器# ',
+              url: 'http://weibo.com/7610066765/KjuG5dLsw'
             }, {
-              pubtime: '2021/6/10 13:50:00',
+              pubtime: '2021/6/10 13:33:35',
               trans_num: '788',
-              title: '15年买的洗衣机坏了两三次了，一开始就说轴承坏了，售后给换的轴承。现在轴承又坏了。',
-              url: 'https://tieba.baidu.com/p/7397345607'
+              title: '​​我是。江苏省盐城市东台市头灶村宝丰居委会。。我要投诉我们当地的海尔售后。我是在。6月8号买的，一台海尔。洗衣机。至今为止。都没有海尔售后。',
+              url: 'http://weibo.com/7520639563/KjwwVAmIJ'
             }],
             Sort: true // 未超过5名 前三名有样式区分
           }
         } else {
           this.chartDataTable = {
             arr: [{
-              pubtime: '2021/6/10 11:12:21',
+              pubtime: '2021/6/4 22:20:24',
               trans_num: '32983',
-              title: '我要投诉@海尔客服 海尔热水器旗舰店虚假发货',
-              url: 'http://weibo.com/7586409370/KjvBC4FVW'
+              title: '​​海尔什么垃圾洗衣机！永远在进水永远在E4错误❌ ！ ​​​​​',
+              url: 'http://weibo.com/6220386099/KiFpN2gHi'
             }, {
-              pubtime: '2021/6/9 21:51:25',
+              pubtime: '2021/6/5 14:28:00',
               trans_num: '24216',
-              title: '​我要投诉@海尔客服 海尔冰箱质量问题',
-              url: 'http://weibo.com/3075845847/KjqmvmRV5'
+              title: '​卡萨帝的油烟机和灶具质量真的太差！对不起这个品牌～  家里很多家电都用了卡萨帝，但是烟机和灶具真的很差劲！首先灶具竟然自己爆了，刚装修的房子没用几次就出现这种问题',
+              url: 'http://weibo.com/5840510228/KiLKxj0vF'
             }, {
-              pubtime: '2021/6/9 21:00:31',
+              pubtime: '2021/6/5 10:13:55',
               trans_num: '4378',
-              title: '​我要投诉@海尔客服 天猫以及海尔热水器旗舰店未履行承诺且不退款',
-              url: 'http://weibo.com/2621763097/Kjq1QDENm'
+              title: '​#焕新生活 就选海尔除菌舱空调 我是个急性子，最讨厌慢吞吞了，以前家里用的空调，制冷慢，制热也慢，每次都好好久，很烦。今年换空调也对比了很多品牌，发现海尔的制冷最快，能实现15秒急速制冷，就海尔了。 ​​​',
+              url: 'http://weibo.com/7609755509/KiK5pc7tc'
             }, {
-              pubtime: '2021/6/9 19:52:45',
+              pubtime: '2021/6/9 22:10:13',
               trans_num: '1245',
-              title: '​海尔现在太让人失望了，修个热水器踢皮球，根本不把客户放心上了，海尔变了 ',
-              url: 'http://weibo.com/6857270648/KjpAlaCdW'
+              title: '​​海尔售后垃圾 ，买了全套海尔家电，结果空调的散热板运输过程中断裂了，装修师傅来安装的时候就说修不好的，但是北京售后依然说不给换货，就请问海尔售后是个什么态度',
+              url: 'http://weibo.com/7490139180/Kjqu907HV'
             }, {
-              pubtime: '2021/6/8 23:08:23',
+              pubtime: '2021/6/6 00:33:47',
               trans_num: '788',
-              title: '​海尔这么大公司，售后竟然再三推脱，冰箱有问题一直给维修，冰箱立梁有水珠，给换封条，又给换门子 ，又给换立梁，现在问题还没解决，',
-              url: 'http://weibo.com/2904014187/KjhrftYp8'
+              title: '三菱重工海尔中央空调质量太差，后悔死了。用了不到一年就出问题了，因装修新房时买的装修好后一直没住，上年十一搬入的，空调才用。现在内机出问题，打400来了检修师傅说你这不能保修了，时间有点久了，需要换配件还超贵。',
+              url: 'http://weibo.com/6451708282/KiPIqB2jr'
             }],
             Sort: true // 未超过5名 前三名有样式区分
           }
@@ -845,7 +788,6 @@ export default {
     padding: 0;
     div {
       height: 100%;
-      position: relative;
     }
   }
 }

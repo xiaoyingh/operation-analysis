@@ -192,6 +192,9 @@ $desaturate : 6%;
 .el-date-range-picker {
   .el-picker-panel__body-wrapper {
     @include background-color('date-range-input-bg');
+    .el-picker-panel__sidebar {
+      @include background-color('date-range-input-bg');
+    }
   }
 }
 .el-date-range-picker__content.is-left {
@@ -552,5 +555,10 @@ $desaturate : 6%;
 // 多选
 .el-checkbox__label {
   font-weight: 400;
+}
+.el-table .cell div{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 // element-ui ********************结束*********************

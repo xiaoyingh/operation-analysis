@@ -93,14 +93,19 @@ $navBarHeight: 65px;
       & .sidebar-logo-link {
         height: 100%;
         width: 100%;
-    
+        display: flex;
+        justify-content: center;
+        align-items: center;
         & .sidebar-logo {
-          width: 36px;
+          // width: 36px;
           height: 36px;
           vertical-align: middle;
           margin-right: 20px;
         }
-    
+        & span {
+          font-size: 24px;
+          font-weight: 700;
+        }
         & .sidebar-title {
           width: 100px;
           vertical-align: middle;

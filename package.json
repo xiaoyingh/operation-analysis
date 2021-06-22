@@ -5,7 +5,7 @@
   "author": "Pan <panfree23@gmail.com>",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build:prod": "vue-cli-service build production",
+    "build:prod": "vue-cli-service build --mode production",
     "build:test": "vue-cli-service build --mode test",
     "preview": "node build/index.js --preview",
     "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml",

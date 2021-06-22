@@ -1,5 +1,6 @@
 @import './common/colors.scss';
 @import './common/fonts.scss';
+@import './common/bordermargin.scss';
 //定义全局主题&颜色的map数组，鉴于V5只有白天和晚上的主题，此处仅定义这两种
 //切记 所有颜色一式两份儿，务必保证key值统一，key值可以自定义，注意避免$%_之类的，
 //与sass自有符号冲突，见文知意即可

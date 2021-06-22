@@ -1,7 +1,8 @@
 @import './common/mixin.scss';
 @import './common/transition.scss';
 @import './common/sidebar.scss';
-@import './common//navbar.scss';
+@import './common/navbar.scss';
+
 @font-face {
   font-family: 'Noto Sans SC';
   font-style: normal;
@@ -38,6 +39,8 @@ label {
 html {
   height: 100%;
   box-sizing: border-box;
+  background: #e8ecf0;
+  overflow-x: hidden;
 }
 
 ul,li {
@@ -81,4 +84,234 @@ div:focus {
     clear: both;
     height: 0;
   }
+}
+
+
+
+/*
+   模块公用的头部
+*/
+.boxWarp{
+  // display: flex;
+}
+.boxRightWarp {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+	.titleBox {
+		.topTitle {
+			display: flex;
+			justify-content: space-between;
+			font-size: $font18px;
+		}
+		.echarts {
+			overflow: hidden;
+			div {
+				width: 50%;
+				float: left;
+			}
+		}
+	}
+}
+.numberpapers .box:nth-child(1){
+	border-radius: 5px 0 0 5px;
+}
+.numberpapers .box:nth-child(6){
+	border-radius: 0 5px 5px 0;
+}
+.titleBox {
+  @include background-color('tab-nav-bg');
+}
+/* 每行一个模块 */
+.row_box {
+  margin-top: $margin8px;
+}
+/* 每行两一个模块 */
+.row_flex_box {
+  display: flex;
+  margin-top: $margin8px;
+  .left_flex_box {
+    flex: 1;
+    background: $pureWhite;
+    border-radius: $radious6px;
+  }
+  .right_flex_box {
+    flex: 1;
+    margin-left: $margin8px;
+    background: $pureWhite;
+    border-radius: $radious6px;
+  }
+}
+
+.buttongruop {
+  height: 52px;
+  margin-bottom: $margin8px;
+  background: $pureWhite;
+  border-radius: $radious4px;
+  @include background-color('tab-nav-bg');
+  @include color('tab-item-color');
+}
+
+.comparison {
+  background: $pureWhite;
+  border-radius: $radious4px;
+  @include background-color('tab-nav-bg');
+  @include color('tab-item-color');
+}
+
+.button_group {
+  height: 52px;
+  border-radius: $radious4px;
+  margin: $margin8px $margin8px 0;
+  @include background-color('tab-nav-bg');
+  @include color('tab-item-color');
+}
+
+.buttongroup_time {
+  @include background-color('tab-nav-bg');
+  @include color('tab-item-color');
+  height: 100%;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  align-content: center;
+  .group-left{
+    display: flex;
+    align-content: center;
+    flex: 1;
+  }
+  .group-right{
+    display: flex;
+    align-items: center;
+    padding-right: 16px;
+  }
+}
+
+.row_box_top10{
+  .row_box_top10_table{
+    display: flex;
+    .tables{
+      flex: 1;
+    }
+  }
+}
+
+.el-icon-download{
+  cursor: pointer;
+}
+
+.hot_document_table {
+  display: flex;
+}
+
+.row_box_top10{
+  .row_box_top10_table{
+    display: flex;
+    .tables{
+      flex: 1;
+    }
+  }
+}
+//.main-container {height: calc(100% - 65px) }
+.main-container>div{height:100%}
+
+// 滚动条样式修改
+::-webkit-scrollbar{
+  width:8px;
+  height:10px;
+}
+::-webkit-scrollbar-track{
+  //background: #fff;
+  background: transparent;
+  border-radius:8px;
+}
+::-webkit-scrollbar-thumb{
+  //background: #f4f4f4;
+  background: rgba(144,147,153,.3);
+  border-radius:8px;
+}
+::-webkit-scrollbar-thumb:hover{
+  background: #c7c9cc;
+}
+::-webkit-scrollbar-corner{
+  background: green;
+}
+
+// 弹框
+/deep/ .el-dialog .el-dialog__body{
+  padding: 24px !important;
+}
+.button{
+  text-align: right;
+}
+
+//热门top10
+/deep/ .el-tabs__content {
+  height: 647px;
+  overflow-y: auto;
+}
+
+.notCount {
+  text-align: center;
+  color: #A0A2B2;
+  position: relative;
+  .nodata {
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  img {
+    width: 206px;
+    height: 112px;
+  }
+  p {
+    margin-top: -10px;
+  }
+}
+.middle {
+  color: #D50E0B;
+  width: 26px;
+  height: 26px;
+}
+.titleone {
+  color: #D50E0B;
+}
+.titletwo {
+  color: #FF8D00;
+}
+.titlethere {
+  color: #00A98B;
+}
+.indexone {
+  text-align: center;
+  color: #fff;
+  background: url(../assets/images/hotbig1.png) no-repeat;
+  background-size: 100%;
+  width: 26px;
+  height: 26px;
+  background-position: 0px -4px;
+  font-size: 12px;
+}
+.indextwo {
+  text-align: center;
+  color: #fff;
+  background: url(../assets/images/hotbig2.png) no-repeat center;
+  background-size: 100%;
+  background-position: 0px -4px;
+  width: 26px;
+  height: 26px;
+  font-size: 12px;
+}
+.indexthere {
+  text-align: center;
+  color: #fff;
+  background: url(../assets/images/hotbig3.png) no-repeat center;
+  background-size: 100%;
+  background-position: 0px -4px;
+  width: 26px;
+  height: 26px;
+  font-size: 12px;
 }

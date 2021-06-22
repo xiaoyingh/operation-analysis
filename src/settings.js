@@ -8,7 +8,7 @@
  */
 module.exports = {
 
-  title: '运营分析',
+  title: '体验BI分析',
 
   /**
    * @type {boolean} true | false

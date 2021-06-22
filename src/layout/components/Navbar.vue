@@ -2,7 +2,7 @@
   <div class="navbar">
     <!-- logo -->
     <div class="left">
-      <span>运营分析</span>
+      <span>体验BI分析</span>
     </div>
     <!-- 用户信息 -->
     <div class="right">
@@ -13,7 +13,7 @@
         @mouseleave="hover =false"
         @click="openDrawer"
       />
-      <span>模板名称</span>
+      <span>海尔</span>
     </div>
     <!-- 设置弹窗 -->
     <settingDrawer ref="settingDrawer" />

@@ -63,38 +63,55 @@ export const asyncRoutes = [
       path: 'overView',
       name: 'overView-index',
       component: 'overView/index',
-      meta: { title: '分析总览', icon: 'iconICON_rediansulan' }
+      meta: { title: '情感分析', icon: 'iconICON_rediansulan' }
     }]
   },
   {
-    path: '/accountAnalysis',
+    path: '/serveAnalysis',
     component: Layout,
-    redirect: '/accountAnalysis/analysisIndex',
-    name: 'accountAnalysis',
+    redirect: '/serveAnalysis/analysisIndex',
+    name: 'serveAnalysis',
     children: [
       {
         path: 'analysisIndex',
-        component: () => import('@/views/accountAnalysis/index'), // Parent router-view
+        component: () => import('@/views/serveAnalysis/index'), // Parent router-view
         name: 'analysisIndex',
         meta: {
-          title: '账号分析',
+          title: '服务分析',
           icon: 'iconICON_rediansulan'
         }
       }
     ]
   },
   {
-    path: '/accountManagement',
+    path: '/productAnalysis',
     component: Layout,
-    redirect: '/accountManagement/manageIndex',
-    name: 'accountManagement',
+    redirect: '/productAnalysis/productIndex',
+    name: 'productAnalysis',
     children: [
       {
-        path: 'manageIndex',
-        component: () => import('@/views/accountManagement/index'), // Parent router-view
-        name: 'manageIndex',
+        path: 'productIndex',
+        component: () => import('@/views/productAnalysis/index'), // Parent router-view
+        name: 'productIndex',
         meta: {
-          title: '账号管理',
+          title: '产品分析',
+          icon: 'iconICON_rediansulan'
+        }
+      }
+    ]
+  },
+  {
+    path: '/competingAnalysis',
+    component: Layout,
+    redirect: '/competingAnalysis/competingIndex',
+    name: 'competingAnalysis',
+    children: [
+      {
+        path: 'competingIndex',
+        component: () => import('@/views/competingAnalysis/index'), // Parent router-view
+        name: 'competingIndex',
+        meta: {
+          title: '竞品分析',
           icon: 'iconICON_rediansulan'
         }
       }
